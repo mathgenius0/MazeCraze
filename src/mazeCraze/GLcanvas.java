@@ -1,4 +1,4 @@
-package leland.machen.maze;
+package mazeCraze;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 	private final float[] _mViewMatrix = new float[16];
 	private ArrayList<Square> _mSquare = new ArrayList<Square>();
 	private float _screenwidth;
-	private DIRECTION _desireddirection = DIRECTION.NORTH;
+	private Direction _desireddirection = Direction.NORTH;
 	private Coordinate _desiredposition = START;
 	private float _currentdirection = 0.0f;
 	private Coordinate _currentposition = START;
@@ -105,7 +105,7 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 			curr.draw(_mMVPMatrix);
 	}
 
-	private float logistic(float x, DIRECTION direction, float start) {
+	private float logistic(float x, Direction direction, float start) {
 		return (float) (start + direction.angleTo(start) / (1 + Math.exp(-x)));
 	}
 

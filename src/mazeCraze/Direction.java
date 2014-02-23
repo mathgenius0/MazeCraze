@@ -1,20 +1,20 @@
-package leland.machen.maze;
+package mazeCraze;
 
-enum DIRECTION {
+public enum Direction {
 	NORTH(0.0f), EAST(Math.PI / 2.0), SOUTH(Math.PI), WEST(3.0 * Math.PI / 2.0);
 
 	private float _angle;
 
-	DIRECTION(double angle) {
+	Direction(double angle) {
 		_angle = (float) angle;
 	}
 
-	public DIRECTION right() {
-		return DIRECTION.values()[negmod(this.ordinal() + 1, 4)];
+	public Direction right() {
+		return Direction.values()[negmod(this.ordinal() + 1, 4)];
 	}
 
-	public DIRECTION left() {
-		return DIRECTION.values()[negmod(this.ordinal() - 1, 4)];
+	public Direction left() {
+		return Direction.values()[negmod(this.ordinal() - 1, 4)];
 	}
 
 	private int negmod(int a, int b) {

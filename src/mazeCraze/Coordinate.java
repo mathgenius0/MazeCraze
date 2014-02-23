@@ -1,4 +1,4 @@
-package leland.machen.maze;
+package mazeCraze;
 
 public class Coordinate {
 	private float _x, _y, _z;
@@ -38,7 +38,7 @@ public class Coordinate {
 	}
 
 
-	public Coordinate forward(DIRECTION d) {
+	public Coordinate forward(Direction d) {
 		return this.add(d.getCoord());
 	}
 }

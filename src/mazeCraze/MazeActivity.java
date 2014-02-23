@@ -1,4 +1,4 @@
-package leland.machen.maze;
+package mazeCraze;
 
 import android.app.Activity;
 import android.os.Bundle;
