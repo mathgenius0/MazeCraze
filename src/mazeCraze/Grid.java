@@ -2,8 +2,10 @@ package mazeCraze;
 
 import java.util.ArrayList;
 
+import com.cloudmine.api.CMObject;
+
 //TODO SERIALIZE
-public class Grid {
+public class Grid extends CMObject {
 	private static int GRID_SIZE = 10;
 	//TODO recentangular grid => extract the grid lookup into its own function
 	private static Graphics GRAPHICS; // TODO how is this assigned? should it be initialized per maze? per block?
