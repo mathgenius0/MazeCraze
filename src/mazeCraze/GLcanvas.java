@@ -16,7 +16,8 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 	private final float[] _mMVPMatrix = new float[16];
 	private final float[] _mProjectionMatrix = new float[16];
 	private final float[] _mViewMatrix = new float[16];
-	private ArrayList<Square> _mSquare = new ArrayList<Square>();
+	private ArrayList<float[]> _matrices = new ArrayList<float[]>();
+	private Square _mSquare;
 	private Direction _desireddirection = Direction.NORTH;
 	private Coordinate _desiredposition = START;
 	private float _currentdirection = 0.0f;
@@ -79,8 +80,12 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		Matrix.multiplyMM(_mMVPMatrix, 0, _mProjectionMatrix, 0, _mViewMatrix, 0);
 
 		// Draw square
-		for (Square curr : _mSquare)
-			curr.draw(_mMVPMatrix);
+		for (float[] curr : _matrices)
+		{
+			float[] temp = new float[16];
+			Matrix.multiplyMM(temp,0,_mMVPMatrix,0,curr,0);
+			_mSquare.draw(temp);
+		}
 	}
 
 	private float logistic(float x, Direction direction, float start) {
@@ -111,10 +116,24 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		// Set the background frame color
 		GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-		_mSquare.add(new Square(0, 1, true, new float[] { 0, 1, 0, 1 }));
-		_mSquare.add(new Square(0, 0, true, new float[] { 1, 1, 0, 1 }));
-		_mSquare.add(new Square(1, 0, false, new float[] { 1, 0, 0, 1 }));
-		_mSquare.add(new Square(0, 0, false, new float[] { 0, 0, 1, 1 }));
+		_mSquare = new Square();
+		for(int i = 0; i < 4; i ++)
+		{
+			float[] mat = new float[16];
+			Matrix.setIdentityM(mat,0);
+			Matrix.translateM(mat,0,-.5f,0f,-.5f);
+			float[] tempmat = new float[16];
+			Matrix.setIdentityM(tempmat,0);
+			Matrix.setRotateM(tempmat,0,i*90,0,1,0);
+			Matrix.multiplyMM(mat,0,tempmat,0,mat,0);
+			Matrix.setIdentityM(tempmat,0);
+			Matrix.translateM(tempmat,0,.5f,0f,.5f);
+			Matrix.multiplyMM(mat,0,tempmat,0,mat,0);
+			_matrices.add(mat);
+		}
+//		_mSquare.add(new Square(0, 1, true, new float[] { 0, 1, 0, 1 }));
+//		_mSquare.add(new Square(0, 0, true, new float[] { 1, 1, 0, 1 }));
+//		_mSquare.add(new Square(1, 0, false, new float[] { 1, 0, 0, 1 }));
+//		_mSquare.add(new Square(0, 0, false, new float[] { 0, 0, 1, 1 }));
 	}
 }

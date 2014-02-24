@@ -105,7 +105,7 @@ public class Square {
 	 * @param mvpMatrix
 	 *            - The Model View Project matrix in which to draw this shape.
 	 */
-	public void draw(float[] mvpMatrix, Graphics graphic) {
+	public void draw(float[] mvpMatrix/*, Graphics graphic */) { //TODO add graphics here
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram);
 
