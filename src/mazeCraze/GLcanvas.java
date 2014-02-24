@@ -32,7 +32,6 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		super(context);
 		setEGLContextClientVersion(2);
 		setRenderer(this);
-		// setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 		setOnTouchListener(new input());
 	}
