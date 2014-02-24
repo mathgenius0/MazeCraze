@@ -1,6 +1,8 @@
 package mazeCraze;
 
 public class FloorBlock extends Block {
+	
+	private Square _floor;
 
 	public FloorBlock(Graphics graphics) {
 		setGraphics(graphics);

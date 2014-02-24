@@ -54,19 +54,20 @@ public class Square {
 
 	private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-	float color[];
+	//TODO import from Graphics ENUM
+	float color[]= {1,0,0,1};
 
 	private static final String TAG = "gl";
 
 	/**
 	 * Sets up the drawing object data for use in an OpenGL ES context.
+	 * Parameter c is an array containing color information.
 	 */
-	public Square(float x, float z, boolean flipped, float c[]) {
-		float squareCoords[] = { x, 1.0f, z, // top left
-				x, 0.0f, z, // bottom left
-				x + (flipped ? 1 : 0), 0.0f, z + (flipped ? 0 : 1), // bottom right
-				x + (flipped ? 1 : 0), 1.0f, z + (flipped ? 0 : 1) }; // top right
-		color = c.clone();
+	public Square() {
+		float squareCoords[] = { 0, 1.0f, 0, // top left
+				0, 0.0f, 0, // bottom left
+				1, 0.0f, 0, // bottom right
+				1, 1.0f, 0 }; // top right
 
 		// initialize vertex byte buffer for shape coordinates
 		ByteBuffer bb = ByteBuffer.allocateDirect(
@@ -104,7 +105,7 @@ public class Square {
 	 * @param mvpMatrix
 	 *            - The Model View Project matrix in which to draw this shape.
 	 */
-	public void draw(float[] mvpMatrix) {
+	public void draw(float[] mvpMatrix, Graphics graphic) {
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram);
 
