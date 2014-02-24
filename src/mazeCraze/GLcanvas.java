@@ -27,13 +27,17 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 	private float _currentpostime = 0.0f;
 	private final float TIMESTEP = 0.2f;
 	private final float TIMERESET = -5.0f;
+	
+	private Input myInput = new Input("ontouch");
 
 	public GLcanvas(Context context) {
 		super(context);
 		setEGLContextClientVersion(2);
 		setRenderer(this);
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-		setOnTouchListener(new input());
+		
+		setOnTouchListener(myInput);
+		// TODO setAccelerometerListener(myInput);
 	}
 
 	public void right() {
