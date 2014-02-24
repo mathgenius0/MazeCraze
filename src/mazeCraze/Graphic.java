@@ -26,7 +26,10 @@ import android.util.Log;
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
  */
-public class Square {
+public enum Graphic {
+	BRICK("bricks.png"),
+	STUB("stub.png");
+	private String _filename;
 
 	private final String vertexShaderCode =
 	// This matrix member variable provides a hook to manipulate
@@ -63,7 +66,9 @@ public class Square {
 	 * Sets up the drawing object data for use in an OpenGL ES context.
 	 * Parameter c is an array containing color information.
 	 */
-	public Square() {
+	Graphic(String filename) {
+		_filename = filename; //TODO textures
+		
 		float squareCoords[] = { 0, 1.0f, 0, // top left
 				0, 0.0f, 0, // bottom left
 				1, 0.0f, 0, // bottom right
@@ -105,7 +110,7 @@ public class Square {
 	 * @param mvpMatrix
 	 *            - The Model View Project matrix in which to draw this shape.
 	 */
-	public void draw(float[] mvpMatrix/*, Graphics graphic */) { //TODO add graphics here
+	public void draw(float[] mvpMatrix) { //TODO add graphics here
 		// Add program to OpenGL environment
 		GLES20.glUseProgram(mProgram);
 

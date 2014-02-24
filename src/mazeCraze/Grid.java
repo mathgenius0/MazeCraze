@@ -6,8 +6,6 @@ import com.cloudmine.api.CMObject;
 public class Grid extends CMObject {
 	private int _gridSizeX;
 	private int _gridSizeY;
-	private static Graphics GRAPHICS = Graphics.STUB; // TODO how is this assigned? should it be initialized per maze? per block?
-	// per maze and then edited per block via block or grid functionality?
 	
 	//TODO draw functionality for each block in some type of render function
 	
@@ -26,8 +24,10 @@ public class Grid extends CMObject {
 	}
 	
 	private void initialize() {
-		for(int i = 0; i < _gridSizeX*_gridSizeY; i++)
-			_blocks.add( new WallBlock(GRAPHICS) );
+		for(int i = 0; i < _gridSizeX*_gridSizeY; i++) {
+			Block b = new WallBlock( getBlockCoords(i) );
+			_blocks.add(b);
+		}
 	}
 	
 	private void initializeRandom() {
@@ -47,10 +47,11 @@ public class Grid extends CMObject {
 		Block b;
 		int i = getBlockIndex(x, y);
 		
-		if( _blocks.get(i).isTraversible() )
-			b = new WallBlock( _blocks.get(i).getGraphics() );
+		if( _blocks.get(i).isTraversible() ) {
+			b = new WallBlock(x, y);
+		}
 		else
-			b = new FloorBlock( _blocks.get(i).getGraphics() );
+			b = new FloorBlock(x, y);
 		
 		_blocks.set(i, b);
 	}
@@ -59,6 +60,20 @@ public class Grid extends CMObject {
 		// 1D array of a 2D grid => y*GRID_SIZE_X (selects row) + x (adds column) //
 		return (y*_gridSizeX + x);
 	}
+	
+	public int[] getBlockCoords(int index) {
+		int[] coords = new int[2];
+		coords[0] = index % _gridSizeX;
+		coords[1] = index / _gridSizeX;
+				
+		return coords;
+	}
+	
+	// TODO what to do with this class?
+//	public void Draw() {
+//		for(Block b : _blocks)
+//			b.draw(_renderer);
+//	}
 	
 	public int getGridSizeX() { return _gridSizeX; }
 	public void setGridSizeX(int x) { _gridSizeX = x; }

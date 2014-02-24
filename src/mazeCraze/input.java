@@ -17,7 +17,8 @@ public class Input implements OnTouchListener {
 	
 	@Override
 	public boolean onTouch(View v, MotionEvent mouseevent) {
-		
+		//TODO how should the navigation interface with the camera? Via the grid? Or what?
+		//TODO how to interface with the menu? something about switching v shut up smart guy it's fucking late
 		if( _type == Type.ONTOUCH ) {
 			GLcanvas gl = (GLcanvas) v;
 			if (mouseevent.getAction() == MotionEvent.ACTION_DOWN) {
