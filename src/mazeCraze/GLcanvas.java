@@ -9,17 +9,14 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.view.MotionEvent;
 
 public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 	final static Coordinate START = new Coordinate(0.5f, 0.5f, 0.5f);
 	final static Coordinate STARTUP = new Coordinate(0f, 1f, 0f);
-	//	private static final String TAG = "rotate";
 	private final float[] _mMVPMatrix = new float[16];
 	private final float[] _mProjectionMatrix = new float[16];
 	private final float[] _mViewMatrix = new float[16];
 	private ArrayList<Square> _mSquare = new ArrayList<Square>();
-	private float _screenwidth;
 	private Direction _desireddirection = Direction.NORTH;
 	private Coordinate _desiredposition = START;
 	private float _currentdirection = 0.0f;
@@ -37,49 +34,25 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		setRenderer(this);
 		// setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+		setOnTouchListener(new input());
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent mouseevent) {
+	public void right() {
+		_desireddirection = _desireddirection.right();
+		_startdirection = _currentdirection;
+		_currentdirtime = TIMERESET;
+	}
 
-		if (mouseevent.getAction() == MotionEvent.ACTION_DOWN) {
-			float x = mouseevent.getX();
+	public void forward() {
+		_desiredposition = _desiredposition.forward(_desireddirection);
+		_startposition = _currentposition;
+		_currentpostime = TIMERESET;
+	}
 
-			/*
-			 * if (x < (_screenwidth / 2.0)) { // Log.v(TAG, "Left"); //
-			 * Log.v(TAG, "From: " + _currentdirection); _desireddirection =
-			 * _desireddirection.left(); // Log.v(TAG, "To: " +
-			 * _desireddirection.name()); } else { // Log.v(TAG, "Right"); //
-			 * Log.v(TAG, "From: " + _currentdirection); _desireddirection =
-			 * _desireddirection.right(); // Log.v(TAG, "To: " +
-			 * _desireddirection.name()); }
-			 */
-
-			if (x < _screenwidth / 3.0) {
-				_desireddirection = _desireddirection.left();
-				_startdirection = _currentdirection;
-				_currentdirtime = TIMERESET;
-			} else if (x < 2.0 * _screenwidth / 3.0) {
-				_desiredposition = _desiredposition.forward(_desireddirection);
-				_startposition = _currentposition;
-				_currentpostime = TIMERESET;
-			} else {
-				_desireddirection = _desireddirection.right();
-				_startdirection = _currentdirection;
-				_currentdirtime = TIMERESET;
-			}
-		}
-		/*
-		 * // Set the camera position (View matrix) if(mouseevent.getAction() ==
-		 * MotionEvent.ACTION_MOVE) { float x = mouseevent.getX(); float y =
-		 * mouseevent.getY(); double angle = 2*Math.PI*x/w;
-		 * Matrix.setLookAtM(_mViewMatrix, 0, 0.5f-(float)(0.5
-		 * *Math.cos(angle)),0.5f,0.5f-(float)(0.5*Math.sin(angle)),
-		 * EYESTARTLOOK.getX(), EYESTARTLOOK.getY(), EYESTARTLOOK.getZ(),
-		 * EYESTARTUP.getX(), EYESTARTUP.getY(), EYESTARTUP.getZ());
-		 * requestRender(); }
-		 */
-		return true;
+	public void left() {
+		_desireddirection = _desireddirection.left();
+		_startdirection = _currentdirection;
+		_currentdirtime = TIMERESET;
 	}
 
 	@Override
@@ -89,13 +62,14 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		_currentpostime += TIMESTEP;
 		_currentdirtime += TIMESTEP;
 
+		GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 		// Draw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
 
 		// Set the camera position (View matrix)
 		Coordinate look = _currentposition.getLook(_currentdirection);
-		Matrix.setLookAtM(_mViewMatrix, 0, look.getX(), look.getY(), look.getZ(), _currentposition.getX(), _currentposition.getY(),
-				_currentposition.getZ(), STARTUP.getX(), STARTUP.getY(), STARTUP.getZ());
+		Matrix.setLookAtM(_mViewMatrix, 0, look.getX(), look.getY(), look.getZ(), _currentposition.getX(),
+				_currentposition.getY(), _currentposition.getZ(), STARTUP.getX(), STARTUP.getY(), STARTUP.getZ());
 
 		// Calculate the projection and view transformation
 		Matrix.multiplyMM(_mMVPMatrix, 0, _mProjectionMatrix, 0, _mViewMatrix, 0);
@@ -115,7 +89,6 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		_screenwidth = width;
 		// Adjust the viewport based on geometry changes, such as screen rotation
 		GLES20.glViewport(0, 0, width, height);
 

@@ -1,8 +1,9 @@
 package mazeCraze;
 
 import java.util.ArrayList;
+import com.cloudmine.api.CMObject;
 
-public class Grid /*implements CMObject TODO*/ {
+public class Grid extends CMObject {
 	private int _gridSizeX;
 	private int _gridSizeY;
 	private static Graphics GRAPHICS = Graphics.STUB; // TODO how is this assigned? should it be initialized per maze? per block?

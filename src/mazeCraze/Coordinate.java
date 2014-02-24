@@ -28,15 +28,14 @@ public class Coordinate {
 	public Coordinate add(Coordinate other) {
 		return new Coordinate(_x + other._x, _y + other._y, _z + other._z);
 	}
-	
+
 	public Coordinate subtract(Coordinate other) {
 		return new Coordinate(_x - other._x, _y - other._y, _z - other._z);
 	}
-	
+
 	public Coordinate scale(float other) {
 		return new Coordinate(_x * other, _y * other, _z * other);
 	}
-
 
 	public Coordinate forward(Direction d) {
 		return this.add(d.getCoord());
