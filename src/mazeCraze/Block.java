@@ -3,7 +3,7 @@ package mazeCraze;
 public abstract class Block {
 	private Graphics _graphics;
 	
-	public abstract boolean isPassable();
+	public abstract boolean isTraversible();
 	
 	public void setGraphics(Graphics graphics) { _graphics = graphics; }
 	public Graphics getGraphics() { return _graphics; };

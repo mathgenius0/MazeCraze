@@ -6,7 +6,7 @@ public class FloorBlock extends Block {
 		setGraphics(graphics);
 	}
 
-	public boolean isPassable() {
+	public boolean isTraversible() {
 		return true;
 	}
 	

@@ -6,7 +6,7 @@ public class WallBlock extends Block {
 		setGraphics(graphics);
 	}
 
-	public boolean isPassable() {
+	public boolean isTraversible() {
 		return false;
 	}
 	
