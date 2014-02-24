@@ -60,7 +60,8 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		_currentdirection = logistic(_currentdirtime, _desireddirection, _startdirection);
 		_currentpostime += TIMESTEP;
 		_currentdirtime += TIMESTEP;
-
+		
+		// Enable Depth Buffering
 		GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 		// Draw background color
 		GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
