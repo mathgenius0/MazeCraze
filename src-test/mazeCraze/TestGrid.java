@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import cs275.game.mazeCraze.Grid;
+
 public class TestGrid {
 	
 	@Test
