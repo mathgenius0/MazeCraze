@@ -2,6 +2,8 @@ package cs275.game.mazeCraze;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.cloudmine.api.CMObject;
 
 public class Grid extends CMObject {
@@ -15,13 +17,13 @@ public class Grid extends CMObject {
 	public Grid() {
 		_gridSizeX = 10;
 		_gridSizeY = 10;
-		initialize();
+		initializeRandom();
 	}
 	
 	public Grid(int x, int y) {
 		_gridSizeX = x;
 		_gridSizeY = y;
-		initialize();
+		initializeRandom();
 	}
 	
 	private void initialize() {
@@ -32,7 +34,16 @@ public class Grid extends CMObject {
 	}
 	
 	private void initializeRandom() {
-		//TODO figure out how to initialize a random array
+		_blocks.clear();
+		MazeGenerator mg = new MazeGenerator(_gridSizeX,_gridSizeY);
+		ArrayList<Boolean> maze = mg.getMaze();
+		for(int i = 0; i < _gridSizeX*_gridSizeY; i++) {
+			if(maze.get(i))
+				_blocks.add(new FloorBlock( getBlockCoords(i) ));
+			else
+				_blocks.add(new WallBlock( getBlockCoords(i) ));
+		}
+		Log.v("maze",toString());
 	}
 	
 	/**

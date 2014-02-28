@@ -12,10 +12,10 @@ public class GLcanvas extends GLSurfaceView {
 	public GLcanvas(Context context) {
 		super(context);
 		setEGLContextClientVersion(2);
-		grid = new Grid();
-		grid.toggleBlock(0,0);
-		grid.toggleBlock(1,1);
-		grid.toggleBlock(1,0);
+		grid = new Grid(11,11);
+//		grid.toggleBlock(0,0);
+//		grid.toggleBlock(1,1);
+//		grid.toggleBlock(1,0);
 		setRenderer( new MyRenderer(context, grid) );//TODO is renderer and grid class the same??
 		setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 
