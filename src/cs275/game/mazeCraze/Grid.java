@@ -35,7 +35,7 @@ public class Grid extends CMObject {
 	
 	private void initializeRandom() {
 		_blocks.clear();
-		MazeGenerator mg = new MazeGenerator(_gridSizeX,_gridSizeY);
+		MazeGenerator mg = new DFSGen(_gridSizeX,_gridSizeY);
 		ArrayList<Boolean> maze = mg.getMaze();
 		for(int i = 0; i < _gridSizeX*_gridSizeY; i++) {
 			if(maze.get(i))

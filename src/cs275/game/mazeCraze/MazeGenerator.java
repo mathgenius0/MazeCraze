@@ -4,37 +4,16 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.TreeSet;
 
-import android.util.Log;
-
 public class MazeGenerator {
 	TreeSet<Vec> visited = new TreeSet<Vec>();
 	//ArrayDeque<Edge> stack = new ArrayDeque<Edge>();
 	ArrayList<Edge> path = new ArrayList<Edge>();
 	int _sizex, _sizey;
+	Random rand = new Random(System.currentTimeMillis());
 	public MazeGenerator(int sizex, int sizey)
 	{
-		Random rand = new Random(System.currentTimeMillis());
 		_sizex = sizex;
 		_sizey = sizey;
-		Edge curr = new Edge(null,new Vec(0,0));
-		while(visited.size() < (_sizex+1)/2 * (_sizey+1)/2)
-		{
-			ArrayList<Edge> possible = curr._to.getPossible();
-			while(!possible.isEmpty())
-			{
-				Edge temp = possible.remove(rand.nextInt(possible.size()));
-				if(!visited.contains(temp._to))
-				{
-					curr = temp;
-					visited.add(curr._to);
-					path.add(curr);
-					Log.v("gen",curr.toString());
-					possible = curr._to.getPossible();
-				}
-			}
-			//possible = curr._from.getPossible();
-			curr = path.get(path.lastIndexOf(curr._from));
-		}
 	}
 	public ArrayList<Boolean> getMaze()
 	{
@@ -51,7 +30,7 @@ public class MazeGenerator {
 			}
 		return ret;
 	}
-	private class Edge
+	protected class Edge
 	{
 		@Override
 		public boolean equals(Object o) {
@@ -78,7 +57,7 @@ public class MazeGenerator {
 			return _from+"->"+_to;
 		}
 	}
-	private class Vec implements Comparable<Vec>
+	protected class Vec implements Comparable<Vec>
 	{
 		@Override
 		public boolean equals(Object o) {
