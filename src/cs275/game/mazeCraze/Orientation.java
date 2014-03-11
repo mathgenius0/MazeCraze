@@ -24,32 +24,32 @@ public class Orientation {
 	}
 
 	public void right() {
-		_angle += (Math.PI / 2.0);
+		_angle += ( Math.PI / 2.0 );
 	}
 
 	public void left() {
-		_angle -= (Math.PI / 2.0);
+		_angle -= ( Math.PI / 2.0 );
 	}
 
 	public boolean checkForward() {
-		int tempx = Math.round(_x - 0.5f + (float) Math.cos(_angle));
-		int tempz = Math.round(_z - 0.5f + (float) Math.sin(_angle));
-		return GLcanvas.checkGrid(tempx,tempz);
+		int tempx = Math.round( _x - 0.5f + (float) Math.cos( _angle ) );
+		int tempz = Math.round( _z - 0.5f + (float) Math.sin( _angle ) );
+		return GLcanvas.checkGrid( tempx, tempz );
 	}
 
 	public void forward() {
-		_x += (float) Math.cos(_angle);
-		_z += (float) Math.sin(_angle);
+		_x += (float) Math.cos( _angle );
+		_z += (float) Math.sin( _angle );
 	}
 
 	public void logistic(float directionTime, float positionTime, Orientation desired, Orientation starting) {
-		_angle = (float) (starting._angle + desired.angleBetween(starting) / (1 + Math.exp(-directionTime)));
-		_x = (float) (starting._x + (desired._x - starting._x) / (1 + Math.exp(-positionTime)));
-		_z = (float) (starting._z + (desired._z - starting._z) / (1 + Math.exp(-positionTime)));
+		_angle = (float) ( starting._angle + desired.angleBetween( starting ) / ( 1 + Math.exp( -directionTime ) ) );
+		_x = (float) ( starting._x + ( desired._x - starting._x ) / ( 1 + Math.exp( -positionTime ) ) );
+		_z = (float) ( starting._z + ( desired._z - starting._z ) / ( 1 + Math.exp( -positionTime ) ) );
 	}
 
 	public float getLookX() {
-		return _x - (float) (0.5 * Math.cos(_angle));
+		return _x - (float) ( 0.5 * Math.cos( _angle ) );
 	}
 
 	public float getLookY() {
@@ -57,14 +57,14 @@ public class Orientation {
 	}
 
 	public float getLookZ() {
-		return _z - (float) (0.5 * Math.sin(_angle));
+		return _z - (float) ( 0.5 * Math.sin( _angle ) );
 	}
 
 	public float angleBetween(Orientation other) {
 		float diff = _angle - other._angle;
-		while (diff > Math.PI)
+		while ( diff > Math.PI )
 			diff -= 2 * Math.PI;
-		while (diff < -Math.PI)
+		while ( diff < -Math.PI )
 			diff += 2 * Math.PI;
 		return diff;
 	}
