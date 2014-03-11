@@ -16,19 +16,19 @@ public class Input implements OnTouchListener {
 	//TODO if( _type == Type.ACCELEROMETER)
 	
 	@Override
-	public boolean onTouch(View v, MotionEvent mouseevent) {
+	public boolean onTouch(View v, MotionEvent mouseEvent) {
 		//TODO how should the navigation interface with the camera? Via the grid? Or what?
 		//TODO how to interface with the menu? something about switching v shut up smart guy it's fucking late
 		if( _type == Type.ONTOUCH ) {
-			GLcanvas gl = (GLcanvas) v;
-			if (mouseevent.getAction() == MotionEvent.ACTION_DOWN) {
-				float x = mouseevent.getX();
-				if (x < gl.getWidth() / 3.0) {
-					gl.left();
-				} else if (x < 2.0 * gl.getWidth() / 3.0) {
-					gl.forward();
+			GLcanvas navigator = (GLcanvas) v;
+			if (mouseEvent.getAction() == MotionEvent.ACTION_DOWN) {
+				float x = mouseEvent.getX();
+				if (x < navigator.getWidth() / 3.0) {
+					navigator.left();
+				} else if (x < 2.0 * navigator.getWidth() / 3.0) {
+					navigator.forward();
 				} else {
-					gl.right();
+					navigator.right();
 				}
 			}	
 		}
@@ -36,5 +36,5 @@ public class Input implements OnTouchListener {
 	}
 	
 	public String getType() { return _type.name(); }
-	public void setType(String type) { _type = Type.valueOf( type.toUpperCase() ); }
+	public void setType(String type) { _type = Type.valueOf(type); }
 }

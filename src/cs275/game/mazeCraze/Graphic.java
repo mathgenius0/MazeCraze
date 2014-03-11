@@ -27,13 +27,14 @@ import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 import android.util.Log;
-
+ 
 /**
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
  */
 public enum Graphic {
-	TITS(R.drawable.texture);
-	//BRICK("bricks.png"),
+	//TITS(R.drawable.texture),	
+	BRICK(R.drawable.red_brick),
+	DIRT(R.drawable.dirt);
 	//STUB("stub.png");
 	
 	private int _imageid;
@@ -123,8 +124,9 @@ public enum Graphic {
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inScaled = false;
 		// loading texture from resource
-		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), _imageid,options);
-
+		Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), _imageid, options);
+		
+		GLES20.glGenTextures(1, mtextureHandle, 0);
 		// Bind to the texture in OpenGL
 		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mtextureHandle[0]);
 
