@@ -94,21 +94,11 @@ public class Grid extends CMObject {
 		return coords;
 	}
 
-	public int getGridSizeX() {
-		return _gridSizeX;
-	}
+	public int getGridSizeX() { return _gridSizeX; }
+	public void setGridSizeX(int x) { _gridSizeX = x; }
 
-	public void setGridSizeX(int x) {
-		_gridSizeX = x;
-	}
-
-	public int getGridSizeY() {
-		return _gridSizeY;
-	}
-
-	public void setGridSizeY(int y) {
-		_gridSizeY = y;
-	}
+	public int getGridSizeY() { return _gridSizeY; }
+	public void setGridSizeY(int y) { _gridSizeY = y; }
 
 	public int getGridArea() {
 		return _gridSizeX * _gridSizeY;
