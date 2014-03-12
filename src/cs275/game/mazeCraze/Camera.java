@@ -12,7 +12,7 @@ public class Camera {
 
 	private final float TIMESTEP = 0.2f;
 	private final float TIMERESET = -5.0f;
-	private final Orientation START = new Orientation( 0.5f, 0.5f, 0.5f, 0.0f );
+	private final Orientation START = new Orientation( 0.5f, 0.0f, 0.5f, 0.0f );
 	final static Orientation STARTUP = new Orientation( 0f, 1f, 0f, 0.0f );
 
 	private Orientation _desired;
@@ -21,16 +21,16 @@ public class Camera {
 
 	private float _currentDirectionTime = 0.0f;
 	private float _currentPositionTime = 0.0f;
+	private float[] _mViewMatrix = new float[16];
 
 	// Set the camera position (View matrix)
 	public float[] smoothRotation() {
 		_current.logistic( _currentDirectionTime, _currentPositionTime, _desired, _start );
 		_currentPositionTime += TIMESTEP;
 		_currentDirectionTime += TIMESTEP;
-		float[] mViewMatrix = new float[16];
-		Matrix.setLookAtM( mViewMatrix, 0, _current.getLookX(), _current.getLookY(), _current.getLookZ(),
+		Matrix.setLookAtM( _mViewMatrix, 0, _current.getLookX(), _current.getLookY(), _current.getLookZ(),
 				_current.getX(), _current.getY(), _current.getZ(), STARTUP.getX(), STARTUP.getY(), STARTUP.getZ() );
-		return mViewMatrix;
+		return _mViewMatrix;
 	}
 
 	public void right() {

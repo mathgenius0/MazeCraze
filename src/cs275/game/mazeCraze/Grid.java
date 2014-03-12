@@ -2,8 +2,6 @@ package cs275.game.mazeCraze;
 
 import java.util.ArrayList;
 
-import android.util.Log;
-
 import com.cloudmine.api.CMObject;
 
 public class Grid extends CMObject {
@@ -27,7 +25,7 @@ public class Grid extends CMObject {
 
 	public void initialize() {
 		for ( int i = 0; i < _gridSizeX * _gridSizeY; i++ ) {
-			Block b = new FloorBlock( getBlockCoords( i ) );
+			Block b = new WallBlock();
 			_blocks.add( b );
 		}
 	}
@@ -36,13 +34,8 @@ public class Grid extends CMObject {
 		_blocks.clear();
 		_generator.DFSGenerate( _gridSizeX, _gridSizeY );
 
-		Log.v( "maze", toString() );
+		//		Log.v( "maze", toString() );
 	}
-
-	//	public void toggleBlock(int i) {
-	//		int[] coords = getBlockCoords(i);
-	//		toggleBlock(coords[0], coords[1]);
-	//	} TODO get rid of?
 
 	/**
 	 * If a block is selected, it's type should change.
@@ -59,9 +52,9 @@ public class Grid extends CMObject {
 		int i = getBlockIndex( x, y );
 
 		if ( _blocks.get( i ).isTraversible() ) {
-			b = new WallBlock( x, y );
+			b = new WallBlock();
 		} else
-			b = new FloorBlock( x, y );
+			b = new FloorBlock();
 
 		_blocks.set( i, b );
 	}
@@ -81,8 +74,7 @@ public class Grid extends CMObject {
 	}
 
 	public int getBlockIndex(int x, int y) {
-		// 1D array of a 2D grid => y*GRID_SIZE_X (selects row) + x (adds
-		// column) //
+		// 1D array of a 2D grid => y*GRID_SIZE_X (selects row) + x (adds column) //
 		return ( y * _gridSizeX + x );
 	}
 
@@ -131,9 +123,10 @@ public class Grid extends CMObject {
 		return str;
 	}
 
-	public void draw(float[] matrix) {
-		for ( Block b : _blocks ) {
-			b.draw( matrix );
-		}
+	public void generateBuffers() {
+		for ( int y = 0; y < _gridSizeY; y++ )
+			for ( int x = 0; x < _gridSizeX; x++ ) {
+				_blocks.get( getBlockIndex( x, y ) ).generateBuffers( x, y );
+			}
 	}
 }

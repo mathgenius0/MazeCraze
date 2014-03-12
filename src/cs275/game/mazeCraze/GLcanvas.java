@@ -10,19 +10,20 @@ import android.opengl.Matrix;
 
 public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 
-	private Input myInput = new Input( "ontouch" );
+	private static Input myInput = new Input( "ONTOUCH" );
 	private static Camera myCamera = new Camera();
 	private static Grid myGrid;
 	private static MazeGenerator myGenerator = new MazeGenerator();
 
 	private final float[] _mProjectionMatrix = new float[16];
+	private float[] _mMVPMatrix = new float[16];
 	private Context _context;
 
 	public GLcanvas(Context context) {
 		super( context );
 		_context = context;
-		myGrid = myGenerator.DFSGenerate( 21, 21 ); //TODO size? what tells us this?
-
+		myGrid = myGenerator.DFSGenerate( 101, 101 ); //TODO size? what tells us this?
+		//		Log.v( "maze", myGrid.toString() );
 		initialize();
 	}
 
@@ -36,7 +37,6 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 
 	private void initialize() {
 		setEGLContextClientVersion( 2 );
-
 		setRenderer( this );
 		setRenderMode( GLSurfaceView.RENDERMODE_CONTINUOUSLY );
 
@@ -66,32 +66,25 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onDrawFrame(GL10 gl) {
-
 		// Draw background color //
 		GLES20.glClear( GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT );
 
-		float[] transformedForScreenDisplay = convertToScreenMatrix();
-		myGrid.draw( transformedForScreenDisplay );
-	}
-
-	/**
-	 * Calculate the projection and view transformation.
-	 * 
-	 * @return
-	 */
-	private float[] convertToScreenMatrix() {
-		float[] _mMVPMatrix = new float[16];
 		// Combine projection and camera rotation for screen display matrix //
 		Matrix.multiplyMM( _mMVPMatrix, 0, _mProjectionMatrix, 0, GLcanvas.getLook(), 0 );
-		return _mMVPMatrix;
+
+		for ( Graphic curr : Graphic.values() )
+			curr.draw( _mMVPMatrix );
 	}
 
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-
+		myGrid.generateBuffers();
 		// Load the texture for each graphic
-		for ( Graphic curr : Graphic.values() )
-			curr.loadGLTexture( gl, _context );
+		for ( Graphic curr : Graphic.values() ) {
+			curr.loadGLTexture( _context );
+			curr.initializeBuffers();
+		}
+		Graphic.loadShaderCode( _context );
 		// Enable Depth Buffering //
 		GLES20.glEnable( GLES20.GL_DEPTH_TEST );
 		// Set the background frame color //
