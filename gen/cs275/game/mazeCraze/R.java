@@ -28,9 +28,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class id {
         public static final int canvas=0x7f080000;
+        public static final int generateButton=0x7f080001;
+        public static final int mazeCreationInstructions=0x7f080005;
+        public static final int mazeCreatorView1=0x7f080006;
+        public static final int optionsButton=0x7f080002;
+        public static final int returnButton=0x7f080004;
+        public static final int saveButton=0x7f080003;
     }
     public static final class layout {
         public static final int activity_maze=0x7f030000;
+        public static final int creator=0x7f030001;
     }
     public static final class raw {
         public static final int fragmentshader=0x7f040000;
@@ -40,17 +47,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int app_name=0x7f060000;
         public static final int dummy_button=0x7f060001;
         public static final int dummy_content=0x7f060002;
+        public static final int generate=0x7f060003;
+        public static final int lblreturn=0x7f060006;
+        public static final int mazeCreationInstructions=0x7f060007;
+        public static final int options=0x7f060004;
+        public static final int save=0x7f060005;
     }
     public static final class style {
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 
+
     
 
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
+
 
         
 

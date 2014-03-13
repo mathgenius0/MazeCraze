@@ -17,8 +17,7 @@ public class MazeActivity extends Activity {
 		super.onCreate( savedInstanceState );
 		CMApiCredentials.initialize( APP_ID, API_KEY, getApplicationContext() );
 		//setContentView( new MazeNavigatorView( this ) );
-		MazeCreatorView mazeCreatorView = new MazeCreatorView( this );
-		setContentView( mazeCreatorView );
-		mazeCreatorView.invalidate();
+		//setContentView( new MazeCreatorView( this ) );
+		setContentView(R.layout.creator);
 	}
 }

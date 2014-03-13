@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,85 +22,98 @@ public class MazeCreatorView extends View {
 	private Grid _grid;
 	private int _gridX;
 	private int _gridY;
-	private float size;
+	private float _size;
 	private float _topX;
 	private float _topY;
+	private int _viewX;
+	private int _viewY;
 	int _previousX = -1;
 	int _previousY = -1;
 	private Context _context;
+	private int mousex;
+	private int mousey;
 
-	public MazeCreatorView(Context context) {
-		super( context );
+	public MazeCreatorView(Context context, AttributeSet attrs) {
+		super(context, attrs);
 		_context = context;
-		_grid = new MazeGenerator().KruskalGenerate( 11, 11 );
-		_grid.save( new ObjectModificationResponseCallback() {
-			public void onCompletion(ObjectModificationResponse response) {
-				if ( response.wasSuccess() )
-					Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
-			}
+		_grid = new MazeGenerator().KruskalGenerate(11, 11);
+		if (!isInEditMode())
+			_grid.save(new ObjectModificationResponseCallback() {
+				public void onCompletion(ObjectModificationResponse response) {
+					if (response.wasSuccess())
+						Toast.makeText(_context, "Grid Saved",
+								Toast.LENGTH_SHORT).show();
+				}
 
-			public void onFailure(Throwable e, String msg) {
-				Log.v( "cloudmine", "Failed to save grid", e );
-			}
-		} );
+				public void onFailure(Throwable e, String msg) {
+					Log.v("cloudmine", "Failed to save grid", e);
+				}
+			});
 		_gridX = _grid.getGridSizeX();
 		_gridY = _grid.getGridSizeY();
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-
-		int mousex = (int) event.getX();
-		int mousey = (int) event.getY();
-		int selectx = Math.round( ( mousex - _topX ) / size );
-		int selecty = Math.round( ( mousey - _topY ) / size );
-		if ( event.getAction() == MotionEvent.ACTION_DOWN ) {
+		mousex = (int) ( event.getX() );
+		mousey = (int) ( event.getY() );
+		int selectx = (int) Math.floor(( mousex - _topX ) / _size);
+		int selecty = (int) Math.floor(( mousey - _topY ) / _size);
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			try {
-				_grid.toggleBlock( selectx, selecty );
-			} catch ( Exception e ) {
+				_grid.toggleBlock(selectx, selecty);
+			} catch (Exception e) {
 			}
 			updateBitmap();
-			invalidate();
 		}
-		if ( event.getAction() == MotionEvent.ACTION_MOVE ) {
-			if ( _previousX != selectx || _previousY != selecty ) {
+		if (event.getAction() == MotionEvent.ACTION_MOVE) {
+			if (_previousX != selectx || _previousY != selecty) {
 				try {
-					_grid.toggleBlock( selectx, selecty );
-				} catch ( Exception e ) {
+					_grid.toggleBlock(selectx, selecty);
+				} catch (Exception e) {
 				}
 				updateBitmap();
-				invalidate();
 			}
 		}
 		_previousX = selectx;
 		_previousY = selecty;
+		invalidate();
 		return true;
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		super.onDraw( canvas );
-		float x = canvas.getWidth();
-		float y = canvas.getHeight();
-		size = Math.min( x / _gridX, y / _gridY );
-		if ( _bitmap == null ) {
-			_bitmap = Bitmap.createBitmap( Math.round( size * _gridX ), Math.round( size * _gridY ), Bitmap.Config.ARGB_8888 );
-			_canvas = new Canvas( _bitmap );
-			updateBitmap();
-		}
-		_topX = ( Math.max( size * _gridX, x ) - Math.min( size * _gridX, x ) ) / 2;
-		_topY = ( Math.max( size * _gridY, y ) - Math.min( size * _gridY, y ) ) / 2;
-		canvas.drawBitmap( _bitmap, _topX, _topY, paint );
+		super.onDraw(canvas);
+		_topX = ( Math.max(_size * _gridX, _viewX) - Math.min(_size * _gridX,
+				_viewX) ) / 2;
+		_topY = ( Math.max(_size * _gridY, _viewY) - Math.min(_size * _gridY,
+				_viewY) ) / 2;
+		canvas.drawBitmap(_bitmap, _topX, _topY, paint);
+		paint.setColor(Color.BLACK);
+		canvas.drawCircle(mousex, mousey, 5, paint);
+	}
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		_viewX = w;
+		_viewY = h;
+		_size = Math.min(w / _gridX, h / _gridY);
+		_bitmap = Bitmap.createBitmap(Math.round(_size * _gridX),
+				Math.round(_size * _gridY), Bitmap.Config.ARGB_8888);
+		_canvas = new Canvas(_bitmap);
+		updateBitmap();
 	}
 
 	public void updateBitmap() {
-		for ( int y = 0; y < _gridY; y++ ) {
-			for ( int x = 0; x < _gridX; x++ ) {
-				if ( _grid.isTraversible( x, y ) )
-					paint.setColor( Color.GREEN );
+		for (int y = 0; y < _gridY; y++) {
+			for (int x = 0; x < _gridX; x++) {
+				if (_grid.isTraversible(x, y))
+					paint.setColor(Color.GREEN);
 				else
-					paint.setColor( Color.RED );
-				_canvas.drawRect( x * size, y * size, ( x + 1 ) * size, ( y + 1 ) * size, paint );
+					paint.setColor(Color.RED);
+				_canvas.drawRect(x * _size, y * _size, ( x + 1 ) * _size,
+						( y + 1 ) * _size, paint);
 			}
 		}
 	}
