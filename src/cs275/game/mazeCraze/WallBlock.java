@@ -20,10 +20,12 @@ public class WallBlock extends Block {
 
 	@Override
 	public void generateBuffers(int x, int y) {
-		//		Graphic choice = Graphic.values( )[rand.nextInt(Graphic.values( ).length)];
+		// Graphic choice = Graphic.values( )[rand.nextInt(Graphic.values(
+		// ).length)];
 		Graphic choice = Graphic.BRICK;
 		int count = choice.getVertexCount();
-		choice.appendArrays( genVertexCoords( x, y ), genTextureCoords(), genDrawOrder( count ) );
+		choice.appendArrays(genVertexCoords(x, y), genTextureCoords(),
+				genDrawOrder(count));
 	}
 
 	@Override
@@ -65,10 +67,10 @@ public class WallBlock extends Block {
 	@Override
 	public ArrayList<Integer> genDrawOrder(int i) {
 		ArrayList<Integer> order = new ArrayList<Integer>();
-		for ( int a = 0; a < 10; a++ )
-			order.add( ( i + a ) );
-		order.add( ( i + 9 ) );
-		order.add( ( i + 10 ) );
+		for (int a = 0; a < 10; a++)
+			order.add(i + a);
+		order.add(i + 9);
+		order.add(i + 10);
 		return order;
 	}
 

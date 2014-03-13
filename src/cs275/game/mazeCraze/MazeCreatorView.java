@@ -16,23 +16,23 @@ import com.cloudmine.api.rest.response.ObjectModificationResponse;
 public class MazeCreatorView extends View {
 
 	private Paint paint = new Paint();
-	Bitmap b;
-	Canvas c;
-	Grid g;
-	private int gridx;
-	private int gridy;
+	private Bitmap _bitmap;
+	private Canvas _canvas;
+	private Grid _grid;
+	private int _gridX;
+	private int _gridY;
 	private float size;
-	private float topx;
-	private float topy;
-	int prevx = -1;
-	int prevy = -1;
+	private float _topX;
+	private float _topY;
+	int _previousX = -1;
+	int _previousY = -1;
 	private Context _context;
 
 	public MazeCreatorView(Context context) {
 		super( context );
 		_context = context;
-		g = new MazeGenerator().KruskalGenerate( 11, 11 );
-		g.save( new ObjectModificationResponseCallback() {
+		_grid = new MazeGenerator().KruskalGenerate( 11, 11 );
+		_grid.save( new ObjectModificationResponseCallback() {
 			public void onCompletion(ObjectModificationResponse response) {
 				if ( response.wasSuccess() )
 					Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
@@ -42,8 +42,8 @@ public class MazeCreatorView extends View {
 				Log.v( "cloudmine", "Failed to save grid", e );
 			}
 		} );
-		gridx = g.getGridSizeX();
-		gridy = g.getGridSizeY();
+		_gridX = _grid.getGridSizeX();
+		_gridY = _grid.getGridSizeY();
 	}
 
 	@Override
@@ -51,28 +51,28 @@ public class MazeCreatorView extends View {
 
 		int mousex = (int) event.getX();
 		int mousey = (int) event.getY();
-		int selectx = Math.round( ( mousex - topx ) / size );
-		int selecty = Math.round( ( mousey - topy ) / size );
+		int selectx = Math.round( ( mousex - _topX ) / size );
+		int selecty = Math.round( ( mousey - _topY ) / size );
 		if ( event.getAction() == MotionEvent.ACTION_DOWN ) {
 			try {
-				g.toggleBlock( selectx, selecty );
+				_grid.toggleBlock( selectx, selecty );
 			} catch ( Exception e ) {
 			}
 			updateBitmap();
 			invalidate();
 		}
 		if ( event.getAction() == MotionEvent.ACTION_MOVE ) {
-			if ( prevx != selectx || prevy != selecty ) {
+			if ( _previousX != selectx || _previousY != selecty ) {
 				try {
-					g.toggleBlock( selectx, selecty );
+					_grid.toggleBlock( selectx, selecty );
 				} catch ( Exception e ) {
 				}
 				updateBitmap();
 				invalidate();
 			}
 		}
-		prevx = selectx;
-		prevy = selecty;
+		_previousX = selectx;
+		_previousY = selecty;
 		return true;
 	}
 
@@ -81,25 +81,25 @@ public class MazeCreatorView extends View {
 		super.onDraw( canvas );
 		float x = canvas.getWidth();
 		float y = canvas.getHeight();
-		size = Math.min( x / gridx, y / gridy );
-		if ( b == null ) {
-			b = Bitmap.createBitmap( Math.round( size * gridx ), Math.round( size * gridy ), Bitmap.Config.ARGB_8888 );
-			c = new Canvas( b );
+		size = Math.min( x / _gridX, y / _gridY );
+		if ( _bitmap == null ) {
+			_bitmap = Bitmap.createBitmap( Math.round( size * _gridX ), Math.round( size * _gridY ), Bitmap.Config.ARGB_8888 );
+			_canvas = new Canvas( _bitmap );
 			updateBitmap();
 		}
-		topx = ( Math.max( size * gridx, x ) - Math.min( size * gridx, x ) ) / 2;
-		topy = ( Math.max( size * gridy, y ) - Math.min( size * gridy, y ) ) / 2;
-		canvas.drawBitmap( b, topx, topy, paint );
+		_topX = ( Math.max( size * _gridX, x ) - Math.min( size * _gridX, x ) ) / 2;
+		_topY = ( Math.max( size * _gridY, y ) - Math.min( size * _gridY, y ) ) / 2;
+		canvas.drawBitmap( _bitmap, _topX, _topY, paint );
 	}
 
 	public void updateBitmap() {
-		for ( int y = 0; y < gridy; y++ ) {
-			for ( int x = 0; x < gridx; x++ ) {
-				if ( g.isTraversible( x, y ) )
+		for ( int y = 0; y < _gridY; y++ ) {
+			for ( int x = 0; x < _gridX; x++ ) {
+				if ( _grid.isTraversible( x, y ) )
 					paint.setColor( Color.GREEN );
 				else
 					paint.setColor( Color.RED );
-				c.drawRect( x * size, y * size, ( x + 1 ) * size, ( y + 1 ) * size, paint );
+				_canvas.drawRect( x * size, y * size, ( x + 1 ) * size, ( y + 1 ) * size, paint );
 			}
 		}
 	}

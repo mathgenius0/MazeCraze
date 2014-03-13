@@ -21,7 +21,7 @@ public class FloorBlock extends Block {
 	@Override
 	public void generateBuffers(int x, int y) {
 		int count = Graphic.DIRT.getVertexCount();
-		Graphic.DIRT.appendArrays( genVertexCoords( x, y ), genTextureCoords(), genDrawOrder( count ) );
+		Graphic.DIRT.appendArrays( genVertexCoords(x, y), genTextureCoords(), genDrawOrder(count) );
 	}
 
 	@Override
@@ -51,10 +51,10 @@ public class FloorBlock extends Block {
 	@Override
 	protected ArrayList<Integer> genDrawOrder(int i) {
 		ArrayList<Integer> order = new ArrayList<Integer>();
-		for ( int a = 0; a < 4; a++ )
-			order.add( ( i + a ) );
-		order.add( ( i + 3 ) );
-		order.add( ( i + 4 ) );
+		for (int a = 0; a < 4; a++)
+			order.add(i + a);
+		order.add(i + 3);
+		order.add(i + 4);
 		return order;
 	}
 
