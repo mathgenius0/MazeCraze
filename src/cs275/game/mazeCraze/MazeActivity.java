@@ -7,7 +7,9 @@ public class MazeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
-		GLcanvas d = new GLcanvas( this );//TODO should this class even exist like this? where grid go?
-		setContentView( d );
+		//setContentView( new MazeNavigatorView( this ) );
+		MazeCreatorView mazeCreatorView = new MazeCreatorView( this );
+		setContentView( mazeCreatorView );
+		mazeCreatorView.invalidate();
 	}
 }

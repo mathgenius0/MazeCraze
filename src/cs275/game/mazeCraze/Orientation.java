@@ -34,7 +34,7 @@ public class Orientation {
 	public boolean checkForward() {
 		int tempx = Math.round( _x - 0.5f + (float) Math.cos( _angle ) );
 		int tempz = Math.round( _z - 0.5f + (float) Math.sin( _angle ) );
-		return GLcanvas.checkGrid( tempx, tempz );
+		return MazeNavigatorView.checkGrid( tempx, tempz );
 	}
 
 	public void forward() {

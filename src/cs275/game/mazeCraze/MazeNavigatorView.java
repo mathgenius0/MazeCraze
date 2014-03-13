@@ -8,7 +8,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 
-public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
+public class MazeNavigatorView extends GLSurfaceView implements GLSurfaceView.Renderer {
 
 	private static Input myInput = new Input( "ONTOUCH" );
 	private static Camera myCamera = new Camera();
@@ -19,7 +19,7 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 	private float[] _mMVPMatrix = new float[16];
 	private Context _context;
 
-	public GLcanvas(Context context) {
+	public MazeNavigatorView(Context context) {
 		super( context );
 		_context = context;
 		myGrid = myGenerator.DFSGenerate( 101, 101 ); //TODO size? what tells us this?
@@ -27,7 +27,7 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		initialize();
 	}
 
-	public GLcanvas(Context context, Grid grid) {
+	public MazeNavigatorView(Context context, Grid grid) {
 		super( context );
 		_context = context;
 		myGrid = grid;
@@ -70,7 +70,7 @@ public class GLcanvas extends GLSurfaceView implements GLSurfaceView.Renderer {
 		GLES20.glClear( GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT );
 
 		// Combine projection and camera rotation for screen display matrix //
-		Matrix.multiplyMM( _mMVPMatrix, 0, _mProjectionMatrix, 0, GLcanvas.getLook(), 0 );
+		Matrix.multiplyMM( _mMVPMatrix, 0, _mProjectionMatrix, 0, MazeNavigatorView.getLook(), 0 );
 
 		for ( Graphic curr : Graphic.values() )
 			curr.draw( _mMVPMatrix );
