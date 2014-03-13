@@ -5,36 +5,29 @@ import java.util.ArrayList;
 import com.cloudmine.api.CMObject;
 
 public class Grid extends CMObject {
-	MazeGenerator _generator = new MazeGenerator();
-
+	private static final String CLASS_NAME = "Grid";
 	private int _gridSizeX;
 	private int _gridSizeY;
-	private ArrayList<Block> _blocks = new ArrayList<Block>();
+	private ArrayList<ArrayList<Block>> _blocks;
 
 	public Grid() {
-		_gridSizeX = 10;
-		_gridSizeY = 10;
-		initialize();
 	}
 
 	public Grid(int x, int y) {
 		_gridSizeX = x;
 		_gridSizeY = y;
+		_blocks = new ArrayList<ArrayList<Block>>();
 		initialize();
 	}
 
 	public void initialize() {
-		for ( int i = 0; i < _gridSizeX * _gridSizeY; i++ ) {
-			Block b = new WallBlock();
-			_blocks.add( b );
+		WallBlock wall = new WallBlock();
+		for ( int y = 0; y < _gridSizeY; y++ ) {
+			ArrayList<Block> row = new ArrayList<Block>();
+			for ( int x = 0; x < _gridSizeX; x++ )
+				row.add( wall );
+			_blocks.add( row );
 		}
-	}
-
-	public void initializeRandom() {
-		_blocks.clear();
-		_generator.DFSGenerate( _gridSizeX, _gridSizeY );
-
-		//		Log.v( "maze", toString() );
 	}
 
 	/**
@@ -49,14 +42,13 @@ public class Grid extends CMObject {
 			throw exception;
 
 		Block b;
-		int i = getBlockIndex( x, y );
-
-		if ( _blocks.get( i ).isTraversible() ) {
+		if ( _blocks.get( y ).get( x ).traversible() ) {
 			b = new WallBlock();
 		} else
 			b = new FloorBlock();
 
-		_blocks.set( i, b );
+		//		_blocks.set( i, b );
+		_blocks.get( y ).set( x, b );
 	}
 
 	/**
@@ -69,21 +61,16 @@ public class Grid extends CMObject {
 		else if ( x >= _gridSizeX || y >= _gridSizeY )
 			traversible = false;
 		else
-			traversible = _blocks.get( getBlockIndex( x, y ) ).isTraversible();
+			traversible = _blocks.get( y ).get( x ).traversible();
 		return traversible;
 	}
 
-	public int getBlockIndex(int x, int y) {
-		// 1D array of a 2D grid => y*GRID_SIZE_X (selects row) + x (adds column) //
-		return ( y * _gridSizeX + x );
+	public ArrayList<ArrayList<Block>> getBlocks() {
+		return _blocks;
 	}
 
-	public int[] getBlockCoords(int index) {
-		int[] coords = new int[2];
-		coords[0] = index % _gridSizeX;
-		coords[1] = index / _gridSizeX;
-
-		return coords;
+	public void setBlocks(ArrayList<ArrayList<Block>> blocks) {
+		_blocks = blocks;
 	}
 
 	public int getGridSizeX() {
@@ -102,23 +89,14 @@ public class Grid extends CMObject {
 		_gridSizeY = y;
 	}
 
-	public int getGridArea() {
-		return _gridSizeX * _gridSizeY;
-	}
-
 	public String toString() {
 		String str = "";
-
-		int counter = 0;
-		for ( Block b : _blocks ) {
-			str += b;
-			counter++;
-
-			if ( counter == _gridSizeX ) {
-				str += "\n";
-				counter = 0;
-			} else
+		for ( ArrayList<Block> row : _blocks ) {
+			for ( Block b : row ) {
+				str += b;
 				str += " ";
+			}
+			str += "\n";
 		}
 		return str;
 	}
@@ -126,7 +104,12 @@ public class Grid extends CMObject {
 	public void generateBuffers() {
 		for ( int y = 0; y < _gridSizeY; y++ )
 			for ( int x = 0; x < _gridSizeX; x++ ) {
-				_blocks.get( getBlockIndex( x, y ) ).generateBuffers( x, y );
+				_blocks.get( y ).get( x ).generateBuffers( x, y );
 			}
+	}
+	/** This method is needed for cloudmine use */
+	@Override
+	public String getClassName() {
+		return CLASS_NAME;
 	}
 }

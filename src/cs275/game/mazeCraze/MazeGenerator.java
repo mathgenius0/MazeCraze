@@ -10,9 +10,6 @@ public class MazeGenerator {
 
 	//	private Random _rand = new Random( System.currentTimeMillis() );
 
-	public MazeGenerator() {
-	}
-
 	public Grid DFSGenerate(int sizeX, int sizeY) {
 		_sizeX = sizeX;
 		_sizeY = sizeY;

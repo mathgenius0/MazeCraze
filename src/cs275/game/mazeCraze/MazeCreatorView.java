@@ -5,8 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
+
+import com.cloudmine.api.rest.callbacks.ObjectModificationResponseCallback;
+import com.cloudmine.api.rest.response.ObjectModificationResponse;
 
 public class MazeCreatorView extends View {
 
@@ -16,15 +21,27 @@ public class MazeCreatorView extends View {
 	Grid g;
 	private int gridx;
 	private int gridy;
-	private int size;
-	private int topx;
-	private int topy;
+	private float size;
+	private float topx;
+	private float topy;
 	int prevx = -1;
 	int prevy = -1;
+	private Context _context;
 
 	public MazeCreatorView(Context context) {
 		super( context );
-		g = new MazeGenerator().KruskalGenerate( 101, 101 );
+		_context = context;
+		g = new MazeGenerator().KruskalGenerate( 11, 11 );
+		g.save( new ObjectModificationResponseCallback() {
+			public void onCompletion(ObjectModificationResponse response) {
+				if ( response.wasSuccess() )
+					Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
+			}
+
+			public void onFailure(Throwable e, String msg) {
+				Log.v( "cloudmine", "Failed to save grid", e );
+			}
+		} );
 		gridx = g.getGridSizeX();
 		gridy = g.getGridSizeY();
 	}
@@ -34,8 +51,8 @@ public class MazeCreatorView extends View {
 
 		int mousex = (int) event.getX();
 		int mousey = (int) event.getY();
-		int selectx = ( mousex - topx ) / size;
-		int selecty = ( mousey - topy ) / size;
+		int selectx = Math.round( ( mousex - topx ) / size );
+		int selecty = Math.round( ( mousey - topy ) / size );
 		if ( event.getAction() == MotionEvent.ACTION_DOWN ) {
 			try {
 				g.toggleBlock( selectx, selecty );
@@ -62,11 +79,11 @@ public class MazeCreatorView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw( canvas );
-		int x = canvas.getWidth();
-		int y = canvas.getHeight();
+		float x = canvas.getWidth();
+		float y = canvas.getHeight();
 		size = Math.min( x / gridx, y / gridy );
 		if ( b == null ) {
-			b = Bitmap.createBitmap( size * gridx, size * gridy, Bitmap.Config.ARGB_8888 );
+			b = Bitmap.createBitmap( Math.round( size * gridx ), Math.round( size * gridy ), Bitmap.Config.ARGB_8888 );
 			c = new Canvas( b );
 			updateBitmap();
 		}
