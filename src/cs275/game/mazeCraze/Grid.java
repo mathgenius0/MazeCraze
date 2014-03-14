@@ -8,7 +8,7 @@ public class Grid extends CMObject {
 	private static final String CLASS_NAME = "Grid";
 	private int _gridSizeX;
 	private int _gridSizeY;
-	private ArrayList<ArrayList<Block> > _blocks;
+	private ArrayList<ArrayList<Blocks>> _blocks;
 
 	public Grid() {
 	}
@@ -16,16 +16,15 @@ public class Grid extends CMObject {
 	public Grid(int x, int y) {
 		_gridSizeX = x;
 		_gridSizeY = y;
-		_blocks = new ArrayList<ArrayList<Block> >();
+		_blocks = new ArrayList<ArrayList<Blocks>>();
 		initialize();
 	}
 
 	public void initialize() {
-		WallBlock wall = new WallBlock();
 		for ( int y = 0; y < _gridSizeY; y++ ) {
-			ArrayList<Block> row = new ArrayList<Block>();
+			ArrayList<Blocks> row = new ArrayList<Blocks>();
 			for ( int x = 0; x < _gridSizeX; x++ )
-				row.add( wall );
+				row.add( Blocks.WALL );
 			_blocks.add( row );
 		}
 	}
@@ -41,13 +40,12 @@ public class Grid extends CMObject {
 		if ( x >= _gridSizeX || y >= _gridSizeY )
 			throw exception;
 
-		Block b;
-		if ( _blocks.get(y).get(x).traversible() ) {
-			b = new WallBlock();
+		if ( _blocks.get( y ).get( x ).get().traversible() ) {
+			_blocks.get( y ).set( x, Blocks.WALL);
 		} else
-			b = new FloorBlock();
+			_blocks.get( y ).set( x, Blocks.FLOOR);
 
-		_blocks.get(y).set(x, b);
+		
 	}
 
 	/**
@@ -60,15 +58,15 @@ public class Grid extends CMObject {
 		else if ( x >= _gridSizeX || y >= _gridSizeY )
 			traversible = false;
 		else
-			traversible = _blocks.get(y).get(x).traversible();
+			traversible = _blocks.get( y ).get( x ).get().traversible();
 		return traversible;
 	}
 
-	public ArrayList<ArrayList<Block> > getBlocks() {
+	public ArrayList<ArrayList<Blocks>> getBlocks() {
 		return _blocks;
 	}
 
-	public void setBlocks(ArrayList<ArrayList<Block> > blocks) {
+	public void setBlocks(ArrayList<ArrayList<Blocks>> blocks) {
 		_blocks = blocks;
 	}
 
@@ -90,8 +88,8 @@ public class Grid extends CMObject {
 
 	public String toString() {
 		String str = "";
-		for ( ArrayList<Block> row : _blocks ) {
-			for ( Block b : row ) {
+		for ( ArrayList<Blocks> row : _blocks ) {
+			for ( Blocks b : row ) {
 				str += b;
 				str += " ";
 			}
@@ -103,12 +101,12 @@ public class Grid extends CMObject {
 	public void generateBuffers() {
 		for ( int y = 0; y < _gridSizeY; y++ )
 			for ( int x = 0; x < _gridSizeX; x++ ) {
-				_blocks.get(y).get(x).generateBuffers(x, y);
+				_blocks.get( y ).get( x ).get().generateBuffers( x, y );
 			}
 	}
-	
-	/** 
-	 * This method is needed for cloudmine use 
+
+	/**
+	 * This method is needed for cloudmine use
 	 */
 	@Override
 	public String getClassName() {

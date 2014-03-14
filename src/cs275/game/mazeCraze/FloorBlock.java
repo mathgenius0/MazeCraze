@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class FloorBlock extends Block {
 
-	private static final String CLASS_NAME = "FloorBlock";
+//	private static final String CLASS_NAME = "FloorBlock";
 
 	public FloorBlock() {
 	}
@@ -58,9 +58,9 @@ public class FloorBlock extends Block {
 		return order;
 	}
 
-	/** This method is needed for cloudmine use */
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
+//	/** This method is needed for cloudmine use */
+//	@Override
+//	public String getClassName() {
+//		return CLASS_NAME;
+//	}
 }

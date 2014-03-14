@@ -2,9 +2,7 @@ package cs275.game.mazeCraze;
 
 import java.util.ArrayList;
 
-import com.cloudmine.api.CMObject;
-
-public abstract class Block extends CMObject {
+public abstract class Block/* extends CMObject*/ {
 	//	static Random rand = new Random( System.currentTimeMillis() );
 
 	public abstract boolean traversible();
@@ -19,6 +17,19 @@ public abstract class Block extends CMObject {
 
 	protected abstract ArrayList<Integer> genDrawOrder(int i);
 
-	@Override
-	public abstract String getClassName();
+//	@Override
+//	public abstract String getClassName();
+}
+
+enum Blocks {
+	FLOOR(new FloorBlock()), WALL(new WallBlock());
+	Block _block;
+
+	Blocks(Block block) {
+		_block = block;
+	}
+
+	Block get() {
+		return _block;
+	}
 }
