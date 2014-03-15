@@ -8,8 +8,7 @@ public class MazeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
 		//setContentView( new MazeNavigatorView( this ) );
-		MazeCreatorView mazeCreatorView = new MazeCreatorView( this );
-		setContentView( mazeCreatorView );
-		mazeCreatorView.invalidate();
+		//setContentView( new MazeCreatorView( this ) );
+		setContentView(R.layout.creator);
 	}
 }

@@ -4,5 +4,10 @@
     <string name="app_name">Maze 3D</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="generate">Generate</string>
+    <string name="options">Options</string>
+    <string name="save">Save</string>
+    <string name="lblreturn">Return</string>
+    <string name="mazeCreationInstructions">Welcome to the maze creation menu!  Please click on the blocks below to toggle between traversible (green) and non-traversible (red). The start and end blocks (blue) must connect.</string>
 
 </resources>
