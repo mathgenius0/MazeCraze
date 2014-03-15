@@ -5,45 +5,28 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
-
-import com.cloudmine.api.rest.callbacks.ObjectModificationResponseCallback;
-import com.cloudmine.api.rest.response.ObjectModificationResponse;
 
 public class MazeCreatorView extends View {
 
 	private Paint paint = new Paint();
-	private Bitmap _bitmap;
-	private Canvas _canvas;
-	private Grid _grid;
-	private int _gridX;
-	private int _gridY;
-	private float size;
-	private float _topX;
-	private float _topY;
-	int _previousX = -1;
-	int _previousY = -1;
-	private Context _context;
+	Bitmap b;
+	Canvas c;
+	Grid g;
+	private int gridx;
+	private int gridy;
+	private int size;
+	private int topx;
+	private int topy;
+	int prevx = -1;
+	int prevy = -1;
 
 	public MazeCreatorView(Context context) {
 		super( context );
-		_context = context;
-		_grid = new MazeGenerator().KruskalGenerate( 11, 11 );
-		_grid.save( new ObjectModificationResponseCallback() {
-			public void onCompletion(ObjectModificationResponse response) {
-				if ( response.wasSuccess() )
-					Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
-			}
-
-			public void onFailure(Throwable e, String msg) {
-				Log.v( "cloudmine", "Failed to save grid", e );
-			}
-		} );
-		_gridX = _grid.getGridSizeX();
-		_gridY = _grid.getGridSizeY();
+		g = new MazeGenerator().KruskalGenerate( 101, 101 );
+		gridx = g.getGridSizeX();
+		gridy = g.getGridSizeY();
 	}
 
 	@Override
@@ -51,55 +34,55 @@ public class MazeCreatorView extends View {
 
 		int mousex = (int) event.getX();
 		int mousey = (int) event.getY();
-		int selectx = Math.round( ( mousex - _topX ) / size );
-		int selecty = Math.round( ( mousey - _topY ) / size );
+		int selectx = ( mousex - topx ) / size;
+		int selecty = ( mousey - topy ) / size;
 		if ( event.getAction() == MotionEvent.ACTION_DOWN ) {
 			try {
-				_grid.toggleBlock( selectx, selecty );
+				g.toggleBlock( selectx, selecty );
 			} catch ( Exception e ) {
 			}
 			updateBitmap();
 			invalidate();
 		}
 		if ( event.getAction() == MotionEvent.ACTION_MOVE ) {
-			if ( _previousX != selectx || _previousY != selecty ) {
+			if ( prevx != selectx || prevy != selecty ) {
 				try {
-					_grid.toggleBlock( selectx, selecty );
+					g.toggleBlock( selectx, selecty );
 				} catch ( Exception e ) {
 				}
 				updateBitmap();
 				invalidate();
 			}
 		}
-		_previousX = selectx;
-		_previousY = selecty;
+		prevx = selectx;
+		prevy = selecty;
 		return true;
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw( canvas );
-		float x = canvas.getWidth();
-		float y = canvas.getHeight();
-		size = Math.min( x / _gridX, y / _gridY );
-		if ( _bitmap == null ) {
-			_bitmap = Bitmap.createBitmap( Math.round( size * _gridX ), Math.round( size * _gridY ), Bitmap.Config.ARGB_8888 );
-			_canvas = new Canvas( _bitmap );
+		int x = canvas.getWidth();
+		int y = canvas.getHeight();
+		size = Math.min( x / gridx, y / gridy );
+		if ( b == null ) {
+			b = Bitmap.createBitmap( size * gridx, size * gridy, Bitmap.Config.ARGB_8888 );
+			c = new Canvas( b );
 			updateBitmap();
 		}
-		_topX = ( Math.max( size * _gridX, x ) - Math.min( size * _gridX, x ) ) / 2;
-		_topY = ( Math.max( size * _gridY, y ) - Math.min( size * _gridY, y ) ) / 2;
-		canvas.drawBitmap( _bitmap, _topX, _topY, paint );
+		topx = ( Math.max( size * gridx, x ) - Math.min( size * gridx, x ) ) / 2;
+		topy = ( Math.max( size * gridy, y ) - Math.min( size * gridy, y ) ) / 2;
+		canvas.drawBitmap( b, topx, topy, paint );
 	}
 
 	public void updateBitmap() {
-		for ( int y = 0; y < _gridY; y++ ) {
-			for ( int x = 0; x < _gridX; x++ ) {
-				if ( _grid.isTraversible( x, y ) )
+		for ( int y = 0; y < gridy; y++ ) {
+			for ( int x = 0; x < gridx; x++ ) {
+				if ( g.isTraversible( x, y ) )
 					paint.setColor( Color.GREEN );
 				else
 					paint.setColor( Color.RED );
-				_canvas.drawRect( x * size, y * size, ( x + 1 ) * size, ( y + 1 ) * size, paint );
+				c.drawRect( x * size, y * size, ( x + 1 ) * size, ( y + 1 ) * size, paint );
 			}
 		}
 	}

@@ -4,12 +4,7 @@ import java.util.ArrayList;
 
 public class WallBlock extends Block {
 
-	protected static final String CLASS_NAME = "WallBlock";
-
-	public WallBlock() {
-	}
-
-	public boolean traversible() {
+	public boolean isTraversible() {
 		return false;
 	}
 
@@ -20,16 +15,14 @@ public class WallBlock extends Block {
 
 	@Override
 	public void generateBuffers(int x, int y) {
-		// Graphic choice = Graphic.values( )[rand.nextInt(Graphic.values(
-		// ).length)];
+		//		Graphic choice = Graphic.values( )[rand.nextInt(Graphic.values( ).length)];
 		Graphic choice = Graphic.BRICK;
 		int count = choice.getVertexCount();
-		choice.appendArrays(genVertexCoords(x, y), genTextureCoords(),
-				genDrawOrder(count));
+		choice.appendArrays( getVertexCoords( x, y ), getTextureCoords(), getDrawOrder( count ) );
 	}
 
 	@Override
-	protected ArrayList<Float> genVertexCoords(int x, int y) {
+	public ArrayList<Float> getVertexCoords(int x, int y) {
 		ArrayList<Float> coords = new ArrayList<Float>();
 		// @formatter:off
 		coords.add( x + 0.0f ); coords.add( -0.5f ); coords.add( y + 0.0f );
@@ -47,7 +40,7 @@ public class WallBlock extends Block {
 	}
 
 	@Override
-	protected ArrayList<Float> genTextureCoords() {
+	public ArrayList<Float> getTextureCoords() {
 		ArrayList<Float> coords = new ArrayList<Float>();
 		// @formatter:off
 		coords.add( 0.0f ); coords.add( 1.0f );
@@ -65,18 +58,12 @@ public class WallBlock extends Block {
 	}
 
 	@Override
-	public ArrayList<Integer> genDrawOrder(int i) {
+	public ArrayList<Integer> getDrawOrder(int i) {
 		ArrayList<Integer> order = new ArrayList<Integer>();
-		for (int a = 0; a < 10; a++)
-			order.add(i + a);
-		order.add(i + 9);
-		order.add(i + 10);
+		for ( int a = 0; a < 10; a++ )
+			order.add( ( i + a ) );
+		order.add( ( i + 9 ) );
+		order.add( ( i + 10 ) );
 		return order;
-	}
-
-	/** This method is needed for cloudmine use */
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
 	}
 }
