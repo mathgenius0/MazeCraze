@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import cs275.game.mazeCraze.Grid;
+import cs275.game.mazeCraze.Block.Grid;
 
 public class TestGrid {
 	
@@ -15,7 +15,7 @@ public class TestGrid {
 		grid.toggleBlock(1, 0);
 		grid.toggleBlock(0, 1);
 		
-		String shouldPrint = "X .\n. X\n";
+		String shouldPrint = "X . \n. X \n";
 		assertEquals( shouldPrint, grid.toString() );
 	}
 

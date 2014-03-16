@@ -27,36 +27,40 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int red_brick=0x7f020002;
     }
     public static final class id {
-        public static final int btnCreate=0x7f080005;
-        public static final int btnReturn=0x7f08000e;
-        public static final int button2=0x7f080015;
-        public static final int canvas=0x7f080000;
-        public static final int editText3=0x7f080004;
-        public static final int generateButton=0x7f080006;
-        public static final int lstResults=0x7f08000d;
-        public static final int mazeCreationInstructions=0x7f08000a;
-        public static final int mazeCreatorView1=0x7f08000b;
-        public static final int optionsButton=0x7f080007;
-        public static final int returnButton=0x7f080009;
-        public static final int saveButton=0x7f080008;
-        public static final int spinner1=0x7f080010;
-        public static final int spinner2=0x7f080012;
-        public static final int spinner3=0x7f080014;
-        public static final int textView1=0x7f080001;
-        public static final int textView2=0x7f080003;
-        public static final int textView3=0x7f08000f;
-        public static final int textView4=0x7f080011;
-        public static final int textView5=0x7f080013;
-        public static final int txtMazeCreator=0x7f08000c;
-        public static final int txtMazeName=0x7f080002;
+        public static final int RelativeLayout1=0x7f080000;
+        public static final int btncreate=0x7f080015;
+        public static final int btngenerate=0x7f080011;
+        public static final int btnload=0x7f080018;
+        public static final int btnrandom=0x7f080017;
+        public static final int btnreturn=0x7f08000d;
+        public static final int btnsave=0x7f08000f;
+        public static final int btnstartcreate=0x7f08000e;
+        public static final int imglogo=0x7f080016;
+        public static final int laycreator=0x7f080012;
+        public static final int laystyle=0x7f080001;
+        public static final int lblalgoritm=0x7f080019;
+        public static final int lblfloor=0x7f080005;
+        public static final int lbloptions=0x7f080007;
+        public static final int lblsize=0x7f080009;
+        public static final int lblsizedelimiter=0x7f08000b;
+        public static final int lblstyle=0x7f080002;
+        public static final int lblwalls=0x7f080003;
+        public static final int lstResults=0x7f080014;
+        public static final int mazeCreationInstructions=0x7f080010;
+        public static final int spinalgorithm=0x7f08001a;
+        public static final int spinfloor=0x7f080006;
+        public static final int spinwall=0x7f080004;
+        public static final int txtMazeCreator=0x7f080013;
+        public static final int txtgridx=0x7f08000a;
+        public static final int txtgridy=0x7f08000c;
+        public static final int txtname=0x7f080008;
     }
     public static final class layout {
-        public static final int activity_maze=0x7f030000;
-        public static final int create_menu=0x7f030001;
-        public static final int creator=0x7f030002;
-        public static final int load_maze_menu=0x7f030003;
-        public static final int options_menu=0x7f030004;
-        public static final int play_menu=0x7f030005;
+        public static final int create_menu=0x7f030000;
+        public static final int creator=0x7f030001;
+        public static final int load_menu=0x7f030002;
+        public static final int main_menu=0x7f030003;
+        public static final int random_menu=0x7f030004;
     }
     public static final class raw {
         public static final int fragmentshader=0x7f040000;
@@ -64,13 +68,24 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static final int app_name=0x7f060000;
-        public static final int dummy_button=0x7f060001;
-        public static final int dummy_content=0x7f060002;
-        public static final int generate=0x7f060003;
-        public static final int lblreturn=0x7f060006;
-        public static final int mazeCreationInstructions=0x7f060007;
-        public static final int options=0x7f060004;
-        public static final int save=0x7f060005;
+        public static final int desclogo=0x7f06000d;
+        public static final int hintcreator=0x7f060005;
+        public static final int hintname=0x7f060004;
+        public static final int lblalgorithm=0x7f060012;
+        public static final int lblcreate=0x7f060010;
+        public static final int lblcreated=0x7f06000f;
+        public static final int lbldescription=0x7f060006;
+        public static final int lblfloors=0x7f06000a;
+        public static final int lblgenerate=0x7f060011;
+        public static final int lblinstructions=0x7f060003;
+        public static final int lbloptions=0x7f060007;
+        public static final int lblrandom=0x7f06000e;
+        public static final int lblreturn=0x7f060002;
+        public static final int lblsave=0x7f060001;
+        public static final int lblsize=0x7f06000b;
+        public static final int lblsizedelimiter=0x7f06000c;
+        public static final int lblstyle=0x7f060008;
+        public static final int lblwalls=0x7f060009;
     }
     public static final class style {
         /** 
@@ -86,25 +101,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
 
         
-
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
          */
         public static final int AppTheme=0x7f070001;
-        public static final int FullscreenActionBarStyle=0x7f070003;
-        public static final int FullscreenTheme=0x7f070002;
     }
     public static final class styleable {
         /** 
