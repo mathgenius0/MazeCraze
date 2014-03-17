@@ -37,11 +37,12 @@ public class MazeCreatorView extends View {
 		_grid = new MazeGenerator().KruskalGenerate( 11, 11 );
 		if ( !isInEditMode() )
 			_grid.save( new ObjectModificationResponseCallback() {
+				@Override
 				public void onCompletion(ObjectModificationResponse response) {
 					if ( response.wasSuccess() )
 						Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
 				}
-
+				@Override
 				public void onFailure(Throwable e, String msg) {
 					Log.v( "cloudmine", "Failed to save grid", e );
 				}

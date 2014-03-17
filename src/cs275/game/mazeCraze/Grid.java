@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.cloudmine.api.CMObject;
 
 public class Grid extends CMObject {
-	private static final String CLASS_NAME = "Grid";
+	static final String CLASS_NAME = "Grid";
 	private int _gridSizeX;
 	private int _gridSizeY;
 	private ArrayList<ArrayList<Blocks>> _blocks;
