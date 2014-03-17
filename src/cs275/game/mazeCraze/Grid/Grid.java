@@ -7,7 +7,7 @@ import com.cloudmine.api.CMObject;
 import cs275.game.mazeCraze.Graphics.Graphic;
 
 public class Grid extends CMObject {
-	public static final String CLASS_NAME = "Grid";
+	//public static final String CLASS_NAME = "Grid";
 	private String _name;
 	private Graphic _wallstyle;
 	private Graphic _floorstyle;
@@ -94,23 +94,24 @@ public class Grid extends CMObject {
 		return traversible;
 	}
 
-	public ArrayList<ArrayList<Block> > getBlocks() { return _blocks; }
-	public void setBlocks(ArrayList<ArrayList<Block> > blocks) { _blocks = blocks; }
-
+	public String getName() { return _name; }
+	public void setName(String name) { _name = name; }
+	
+	public Graphic getWallStyle() { return _wallstyle; }
+	public void setWallStyle(Graphic wallstyle) { _wallstyle = wallstyle; }
+	
+	public Graphic getFloorStyle() { return _floorstyle; }
+	public void setFloorStyle(Graphic floorstyle) { _floorstyle = floorstyle; }
+	
 	public int getGridSizeX() { return _gridSizeX; }
 	public void setGridSizeX(int x) { _gridSizeX = x; }
 
 	public int getGridSizeY() { return _gridSizeY; }
 	public void setGridSizeY(int y) { _gridSizeY = y; }
 
-	public String getName() { return _name; }
-	public void setName(String name) { _name = name; }
+	public ArrayList<ArrayList<Block> > getBlocks() { return _blocks; }
+	public void setBlocks(ArrayList<ArrayList<Block> > blocks) { _blocks = blocks; }
 
-	public Graphic getWallStyle() { return _wallstyle; }
-	public void setWallStyle(Graphic wallstyle) { _wallstyle = wallstyle; }
-
-	public Graphic getFloorStyle() { return _floorstyle; }
-	public void setFloorStyle(Graphic floorstyle) { _floorstyle = floorstyle; }
 	
 	public Block getBlock(int x, int y) { return _blocks.get(y).get(x); }
 	public void setBlock(int x, int y, Block b) { _blocks.get(y).set(x, b); }

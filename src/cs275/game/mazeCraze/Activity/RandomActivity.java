@@ -29,16 +29,22 @@ public class RandomActivity extends Activity implements OnClickListener {
 		
 		Spinner walls = (Spinner) findViewById( R.id.spinwall );
 		Spinner floors = (Spinner) findViewById( R.id.spinfloor );
-		ArrayAdapter<Graphic> graphicadapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
-				Graphic.values() );
-		graphicadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-		walls.setAdapter( graphicadapter );
-		floors.setAdapter( graphicadapter );
+		ArrayAdapter<Graphic> wallGraphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
+				Graphic.getWallValues() );
+		ArrayAdapter<Graphic> floorGraphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
+				Graphic.getFloorValues() );
+		
+		wallGraphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		floorGraphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		
+		walls.setAdapter( wallGraphicAdapter );
+		floors.setAdapter( floorGraphicAdapter );
 		
 		Spinner generator = (Spinner) findViewById( R.id.spinalgorithm );//TODO edit R.id for this
 		ArrayAdapter<MazeGenerator> generatorAdaptor = new ArrayAdapter<MazeGenerator>( this,
 				android.R.layout.simple_spinner_item, MazeGenerator.values() );
-		graphicadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		
+		generatorAdaptor.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
 		generator.setAdapter( generatorAdaptor );
 	}
 
@@ -63,7 +69,7 @@ public class RandomActivity extends Activity implements OnClickListener {
 			
 			MazeGenerator generator = (MazeGenerator) ( (Spinner) findViewById( R.id.spinalgorithm ) )
 					.getSelectedItem();
-			intent.putExtra( "algorithm", generator.toString() );
+			intent.putExtra( "algorithm", generator.name() );
 			
 			startActivity( intent );
 			break;

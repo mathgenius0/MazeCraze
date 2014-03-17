@@ -32,11 +32,16 @@ public class CreatorOptionsActivity extends Activity implements OnClickListener 
 		
 		Spinner wallSelectionBox = (Spinner) findViewById( R.id.spinwall );
 		Spinner floorSelectionBox = (Spinner) findViewById( R.id.spinfloor );
-		ArrayAdapter<Graphic> graphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
-				Graphic.values() );
-		graphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-		wallSelectionBox.setAdapter( graphicAdapter );
-		floorSelectionBox.setAdapter( graphicAdapter );
+		ArrayAdapter<Graphic> wallGraphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
+				Graphic.getWallValues() );
+		ArrayAdapter<Graphic> floorGraphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
+				Graphic.getFloorValues() );
+		
+		wallGraphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		floorGraphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		
+		wallSelectionBox.setAdapter( wallGraphicAdapter );
+		floorSelectionBox.setAdapter( floorGraphicAdapter );
 	}
 
 	@Override

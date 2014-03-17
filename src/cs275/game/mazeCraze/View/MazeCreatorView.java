@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import cs275.game.mazeCraze.Graphics.Graphic;
@@ -118,7 +117,7 @@ public class MazeCreatorView extends View {
 	}
 
 	public Grid getGrid() {
-		Log.v("serial",_grid.asKeyedObject());
-		return _grid; }
+		return _grid;
+	}
 	
 }

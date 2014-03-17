@@ -19,7 +19,12 @@ import cs275.game.mazeCraze.R;
  * A two-dimensional square for use as a drawn object in OpenGL ES 2.0.
  */
 public enum Graphic {
-	BRICK(R.drawable.red_brick,"Brick"), DIRT(R.drawable.dirt,"Dirt");
+	BRICK(R.drawable.red_brick,"Brick"), 
+	DIRT(R.drawable.dirt,"Dirt"), 
+	HEDGE(R.drawable.hedge, "Hedge"),
+	TILE(R.drawable.tile, "Tile"),
+	CLOUDS(R.drawable.clouds_large, "Clouds");
+	
 	private int _imageid;
 	private String _name;
 	private int a_PositionHandle;
@@ -52,6 +57,19 @@ public enum Graphic {
 	Graphic(int imageid, String name) {
 		_imageid = imageid;
 		_name = name;
+	}
+	
+	//TODO these could be less hard-coded.....
+	public static Graphic[] getWallValues() {
+		Graphic[] g = {Graphic.BRICK, Graphic.HEDGE};
+		
+		return g;
+	}
+	
+	public static Graphic[] getFloorValues() {
+		Graphic[] g = {Graphic.DIRT, Graphic.TILE};
+		
+		return g;
 	}
 
 	@Override

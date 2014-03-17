@@ -104,52 +104,84 @@ public enum Block {
 		public int getColor() { return Color.GREEN; }
 	},
 	
-	ENTRANCE {
+	ENTRANCE {//TODO is this math supposed to be different?
 		@Override
 		public String toString() { return "<"; }
 
 		@Override
 		protected ArrayList<Float> genVertexCoords(int x, int y) {
-			// TODO Auto-generated method stub
-			return null;
+			ArrayList<Float> coords = new ArrayList<Float>();
+			// @formatter:off
+			coords.add( x + 0.0f ); coords.add( -0.5f ); coords.add( y + 0.0f );
+			coords.add( x + 0.0f ); coords.add( -0.5f ); coords.add( y + 1.0f );
+			coords.add( x + 1.0f ); coords.add( -0.5f ); coords.add( y + 0.0f );
+			coords.add( x + 1.0f ); coords.add( -0.5f ); coords.add( y + 1.0f );
+			// @formatter:on
+			return coords;
 		}
 
 		@Override
 		protected ArrayList<Float> genTextureCoords() {
-			// TODO Auto-generated method stub
-			return null;
+			ArrayList<Float> coords = new ArrayList<Float>();
+			// @formatter:off
+			coords.add( 0.0f ); coords.add( 1.0f );
+			coords.add( 0.0f ); coords.add( 0.0f );
+			coords.add( 1.0f ); coords.add( 1.0f );
+			coords.add( 1.0f ); coords.add( 0.0f );
+			// @formatter:on
+			return coords;
 		}
 
 		@Override
 		protected ArrayList<Integer> genDrawOrder(int i) {
-			// TODO Auto-generated method stub
-			return null;
+			ArrayList<Integer> order = new ArrayList<Integer>();
+			for (int a = 0; a < 4; a++)
+				order.add(i + a);
+			order.add(i + 3);
+			order.add(i + 4);
+			return order;
 		}
 
 		@Override
 		public int getColor() { return Color.BLUE; }
 	},
 	
-	EXIT {
+	EXIT {//TODO is this math supposed to be different?
 		@Override
 		public String toString() { return ">"; }
 
 		@Override
 		protected ArrayList<Float> genVertexCoords(int x, int y) {
-			// TODO Auto-generated method stub
-			return null;
+			ArrayList<Float> coords = new ArrayList<Float>();
+			// @formatter:off
+			coords.add( x + 0.0f ); coords.add( -0.5f ); coords.add( y + 0.0f );
+			coords.add( x + 0.0f ); coords.add( -0.5f ); coords.add( y + 1.0f );
+			coords.add( x + 1.0f ); coords.add( -0.5f ); coords.add( y + 0.0f );
+			coords.add( x + 1.0f ); coords.add( -0.5f ); coords.add( y + 1.0f );
+			// @formatter:on
+			return coords;
 		}
 
 		@Override
 		protected ArrayList<Float> genTextureCoords() {
-			// TODO Auto-generated method stub
-			return null;
+			ArrayList<Float> coords = new ArrayList<Float>();
+			// @formatter:off
+			coords.add( 0.0f ); coords.add( 1.0f );
+			coords.add( 0.0f ); coords.add( 0.0f );
+			coords.add( 1.0f ); coords.add( 1.0f );
+			coords.add( 1.0f ); coords.add( 0.0f );
+			// @formatter:on
+			return coords;
 		}
 
 		@Override
 		protected ArrayList<Integer> genDrawOrder(int i) {
-			// TODO Auto-generated method stub
-			return null;
+			ArrayList<Integer> order = new ArrayList<Integer>();
+			for (int a = 0; a < 4; a++)
+				order.add(i + a);
+			order.add(i + 3);
+			order.add(i + 4);
+			return order;
 		}
 		
 
