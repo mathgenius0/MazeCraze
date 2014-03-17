@@ -36,7 +36,7 @@
                 android:value="cs275.game.mazeCraze.MazeActivity" />
         </activity>
         <activity
-            android:name="cs275.game.mazeCraze.Activity.CreateActivity"
+            android:name="cs275.game.mazeCraze.Activity.CreatorOptionsActivity"
             android:parentActivityName="cs275.game.mazeCraze.Activity.MainActivity"
             android:screenOrientation="landscape" >
             <meta-data

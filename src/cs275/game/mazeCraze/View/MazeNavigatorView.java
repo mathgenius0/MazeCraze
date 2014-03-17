@@ -7,10 +7,10 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import cs275.game.mazeCraze.Block.Grid;
 import cs275.game.mazeCraze.Generator.MazeGenerator;
 import cs275.game.mazeCraze.Graphics.Camera;
 import cs275.game.mazeCraze.Graphics.Graphic;
+import cs275.game.mazeCraze.Grid.Grid;
 
 public class MazeNavigatorView extends GLSurfaceView implements GLSurfaceView.Renderer {
 
@@ -26,12 +26,12 @@ public class MazeNavigatorView extends GLSurfaceView implements GLSurfaceView.Re
 		super( context );
 	}
 
-	public MazeNavigatorView(Context context, MazeGenerator.Algorithms algorithm, int sizeX, int sizeY,
+	public MazeNavigatorView(Context context, MazeGenerator generator, int sizeX, int sizeY,
 			Graphic wallstyle, Graphic floorstyle) {
 		super( context );
 		_context = context;
-		myGrid = algorithm.generate( sizeX, sizeY, wallstyle, floorstyle ); //TODO size? what tells us this?
-		//		Log.v( "maze", myGrid.toString() );
+		myGrid = generator.generate( sizeX, sizeY, wallstyle, floorstyle );
+		// Log.v( "maze", myGrid.toString() );
 		initialize();
 	}
 

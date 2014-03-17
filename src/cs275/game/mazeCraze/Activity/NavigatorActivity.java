@@ -17,8 +17,8 @@ public class NavigatorActivity extends Activity {
 		int sizeY = intent.getIntExtra( "gridy", 10 );
 		Graphic walls = Graphic.valueOf( intent.getStringExtra( "walls" ) );
 		Graphic floors = Graphic.valueOf( intent.getStringExtra( "floors" ) );
-		MazeGenerator.Algorithms algorithm = MazeGenerator.Algorithms.valueOf( intent.getStringExtra( "algorithm" ) );
+		MazeGenerator generator = MazeGenerator.valueOf( intent.getStringExtra( "algorithm" ) );
 
-		setContentView( new MazeNavigatorView( this, algorithm, sizeX, sizeY, walls, floors ) );
+		setContentView( new MazeNavigatorView( this, generator, sizeX, sizeY, walls, floors ) );
 	}
 }

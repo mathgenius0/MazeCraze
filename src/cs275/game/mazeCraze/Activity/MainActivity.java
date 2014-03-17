@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			startActivity( new Intent( this, RandomActivity.class ) );
 			break;
 		case R.id.btncreate:
-			startActivity( new Intent( this, CreateActivity.class ) );
+			startActivity( new Intent( this, CreatorOptionsActivity.class ) );
 			break;
 		case R.id.btnload:
 			startActivity( new Intent( this, LoadActivity.class ) );

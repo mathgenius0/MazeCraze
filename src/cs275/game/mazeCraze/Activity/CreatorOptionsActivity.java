@@ -13,23 +13,30 @@ import android.widget.TextView;
 import cs275.game.mazeCraze.R;
 import cs275.game.mazeCraze.Graphics.Graphic;
 
-public class CreateActivity extends Activity implements OnClickListener {
+/**
+ *	Contains the create and clickable activity for the creator options menu.		 
+ *
+ */
+public class CreatorOptionsActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
-		setContentView( R.layout.create_menu );
-		Button ret = (Button) findViewById( R.id.btnreturn );
-		ret.setOnClickListener( this );
-		Button gen = (Button) findViewById( R.id.btnstartcreate );
-		gen.setOnClickListener( this );
-		Spinner walls = (Spinner) findViewById( R.id.spinwall );
-		Spinner floors = (Spinner) findViewById( R.id.spinfloor );
-		ArrayAdapter<Graphic> graphicadapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
+		setContentView( R.layout.creator_options_menu );
+		
+		Button returnButton = (Button) findViewById( R.id.btnreturn );
+		returnButton.setOnClickListener( this );
+		
+		Button generateButton = (Button) findViewById( R.id.btnstartcreate );
+		generateButton.setOnClickListener( this );
+		
+		Spinner wallSelectionBox = (Spinner) findViewById( R.id.spinwall );
+		Spinner floorSelectionBox = (Spinner) findViewById( R.id.spinfloor );
+		ArrayAdapter<Graphic> graphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
 				Graphic.values() );
-		graphicadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-		walls.setAdapter( graphicadapter );
-		floors.setAdapter( graphicadapter );
+		graphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+		wallSelectionBox.setAdapter( graphicAdapter );
+		floorSelectionBox.setAdapter( graphicAdapter );
 	}
 
 	@Override

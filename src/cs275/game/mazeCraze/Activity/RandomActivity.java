@@ -20,10 +20,13 @@ public class RandomActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.random_menu );
-		Button ret = (Button) findViewById( R.id.btnreturn );
-		ret.setOnClickListener( this );
-		Button gen = (Button) findViewById( R.id.btngenerate );
-		gen.setOnClickListener( this );
+		
+		Button returnButton = (Button) findViewById( R.id.btnreturn );
+		returnButton.setOnClickListener( this );
+		
+		Button generateButton = (Button) findViewById( R.id.btngenerate );
+		generateButton.setOnClickListener( this );
+		
 		Spinner walls = (Spinner) findViewById( R.id.spinwall );
 		Spinner floors = (Spinner) findViewById( R.id.spinfloor );
 		ArrayAdapter<Graphic> graphicadapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
@@ -31,11 +34,12 @@ public class RandomActivity extends Activity implements OnClickListener {
 		graphicadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
 		walls.setAdapter( graphicadapter );
 		floors.setAdapter( graphicadapter );
-		Spinner algorithm = (Spinner) findViewById( R.id.spinalgorithm );
-		ArrayAdapter<MazeGenerator.Algorithms> algorithmadapter = new ArrayAdapter<MazeGenerator.Algorithms>( this,
-				android.R.layout.simple_spinner_item, MazeGenerator.Algorithms.values() );
+		
+		Spinner generator = (Spinner) findViewById( R.id.spinalgorithm );//TODO edit R.id for this
+		ArrayAdapter<MazeGenerator> generatorAdaptor = new ArrayAdapter<MazeGenerator>( this,
+				android.R.layout.simple_spinner_item, MazeGenerator.values() );
 		graphicadapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-		algorithm.setAdapter( algorithmadapter );
+		generator.setAdapter( generatorAdaptor );
 	}
 
 	@Override
@@ -46,17 +50,21 @@ public class RandomActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btngenerate:
 			Intent intent = new Intent( this, NavigatorActivity.class );
+			
 			int sizeX = Integer.parseInt( ( (TextView) findViewById( R.id.txtgridx ) ).getText().toString() );
 			intent.putExtra( "gridx", sizeX );
 			int sizeY = Integer.parseInt( ( (TextView) findViewById( R.id.txtgridy ) ).getText().toString() );
 			intent.putExtra( "gridy", sizeY );
+			
 			Graphic walls = (Graphic) ( (Spinner) findViewById( R.id.spinwall ) ).getSelectedItem();
 			intent.putExtra( "walls", walls.name() );
 			Graphic floors = (Graphic) ( (Spinner) findViewById( R.id.spinfloor ) ).getSelectedItem();
 			intent.putExtra( "floors", floors.name() );
-			MazeGenerator.Algorithms algorithm = (MazeGenerator.Algorithms) ( (Spinner) findViewById( R.id.spinalgorithm ) )
+			
+			MazeGenerator generator = (MazeGenerator) ( (Spinner) findViewById( R.id.spinalgorithm ) )
 					.getSelectedItem();
-			intent.putExtra( "algorithm", algorithm.name() );
+			intent.putExtra( "algorithm", generator.toString() );
+			
 			startActivity( intent );
 			break;
 		}
