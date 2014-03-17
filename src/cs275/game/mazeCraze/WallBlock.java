@@ -2,7 +2,7 @@ package cs275.game.mazeCraze;
 
 import java.util.ArrayList;
 
-public class WallBlock extends Block {
+public class WallBlock {
 
 //	protected static final String CLASS_NAME = "WallBlock";
 
@@ -18,7 +18,6 @@ public class WallBlock extends Block {
 		return str;
 	}
 
-	@Override
 	public void generateBuffers(int x, int y) {
 		// Graphic choice = Graphic.values( )[rand.nextInt(Graphic.values(
 		// ).length)];
@@ -28,7 +27,6 @@ public class WallBlock extends Block {
 				genDrawOrder(count));
 	}
 
-	@Override
 	protected ArrayList<Float> genVertexCoords(int x, int y) {
 		ArrayList<Float> coords = new ArrayList<Float>();
 		// @formatter:off
@@ -46,7 +44,6 @@ public class WallBlock extends Block {
 		return coords;
 	}
 
-	@Override
 	protected ArrayList<Float> genTextureCoords() {
 		ArrayList<Float> coords = new ArrayList<Float>();
 		// @formatter:off
@@ -64,7 +61,6 @@ public class WallBlock extends Block {
 		return coords;
 	}
 
-	@Override
 	public ArrayList<Integer> genDrawOrder(int i) {
 		ArrayList<Integer> order = new ArrayList<Integer>();
 		for (int a = 0; a < 10; a++)
