@@ -30,22 +30,25 @@ public class MazeCreatorView extends View {
 	int _previousX = -1;
 	int _previousY = -1;
 	private Context _context;
-
+ 
 	public MazeCreatorView(Context context, AttributeSet attrs) {
 		super( context, attrs );
 		_context = context;
+		
+		ObjectModificationResponseCallback responseCallback = new ObjectModificationResponseCallback() {
+			public void onCompletion(ObjectModificationResponse response) {
+				if ( response.wasSuccess() )
+					Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
+			}
+
+			public void onFailure(Throwable e, String msg) {
+				Log.v( "cloudmine", "Failed to save grid", e );
+			}
+		};
+		
 		_grid = new MazeGenerator().KruskalGenerate( 11, 11 );
 		if ( !isInEditMode() )
-			_grid.save( new ObjectModificationResponseCallback() {
-				public void onCompletion(ObjectModificationResponse response) {
-					if ( response.wasSuccess() )
-						Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
-				}
-
-				public void onFailure(Throwable e, String msg) {
-					Log.v( "cloudmine", "Failed to save grid", e );
-				}
-			} );
+			_grid.save(responseCallback);
 		_gridX = _grid.getGridSizeX();
 		_gridY = _grid.getGridSizeY();
 	}
