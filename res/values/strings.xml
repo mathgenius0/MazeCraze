@@ -7,7 +7,7 @@
     <string name="hintname">Name of maze</string>
     <string name="hintcreator">Username of creator of maze</string>
     <string name="lbldescription">Enter the appropriate information:</string>
-    <string name="lbloptions">Options</string>
+    <string name="lbloptions">Maze Creation Options</string>
     <string name="lblstyle">Maze Style:</string>
     <string name="lblwalls">Walls:</string>
     <string name="lblfloors">Floor:</string>

@@ -36,7 +36,7 @@ public class Grid extends CMObject {
 		_name = name;
 	}
 
-	public void initialize() {
+	public void initialize() {	
 		for ( int y = 0; y < _gridSizeY; y++ ) {
 			ArrayList<Block> row = new ArrayList<Block>();
 			for ( int x = 0; x < _gridSizeX; x++ )
@@ -45,8 +45,29 @@ public class Grid extends CMObject {
 		}
 		
 		initializeTerminals();
+		//addBorder();
 	}
 	
+//	public void addBorder() {
+//		_gridSizeX += 2;
+//		_gridSizeY += 2;
+//		
+//		ArrayList<Block> newRow = new ArrayList<Block>();
+//
+//		// Set the horizontal edges //
+//		for(int x = 0; x < _gridSizeX; x++)
+//			newRow.add(Block.BORDER);
+//		
+//		_blocks.add(0, newRow);
+//		_blocks.add( (_gridSizeY-1), newRow);
+//		
+//		// Set the vertical edges //
+//		for(int y = 0; y < _gridSizeY; y++) {
+//			_blocks.get(y).add(0, Block.BORDER);
+//			_blocks.get(y).add( (_gridSizeX-1), Block.BORDER);
+//		}
+//	}
+//	
 	public void initializeTerminals() {
 		setBlock(0, 0, Block.ENTRANCE);
 		setBlock( (_gridSizeX-1), (_gridSizeY-1), Block.EXIT);
@@ -66,7 +87,7 @@ public class Grid extends CMObject {
 		
 		// Don't have to worry that this will be out of bounds because of above checks //
 		Block current = getBlock(x, y);
-		if ( current != Block.ENTRANCE && current != Block.EXIT ) {
+		if ( current != Block.ENTRANCE && current != Block.EXIT /* && current != Block.BORDER*/ ) {
 			// Entrance and Exit are not toggle-able so skip if it's one of these //
 			if ( isTraversible(x, y) )
 				setBlock(x, y, Block.WALL);
@@ -86,7 +107,7 @@ public class Grid extends CMObject {
 			traversible = false;
 		else if ( x >= _gridSizeX || y >= _gridSizeY )
 			traversible = false;
-		if ( getBlock(x, y) == Block.WALL ) {
+		else if ( getBlock(x, y) == Block.WALL ) {
 			traversible = false;
 		} else
 			traversible = true;
@@ -132,7 +153,7 @@ public class Grid extends CMObject {
 	public void generateBuffers() {
 		for ( int y = 0; y < _gridSizeY; y++ )
 			for ( int x = 0; x < _gridSizeX; x++ ) {
-				Block current = _blocks.get( y ).get( x );
+				Block current = getBlock(x, y);
 				switch ( current ) {
 				case WALL:
 					current.generateBuffers( _wallstyle, x, y );
@@ -147,9 +168,46 @@ public class Grid extends CMObject {
 					current.generateBuffers( _floorstyle, x, y );
 					break;
 				}
-
 			}
+		
+		Graphic graphic = Graphic.BRICK;
+		graphic.appendArrays( genVertexCoords(), genTextureCoords(), genDrawOrder( graphic.getVertexCount() ) );
 	}
+	
+	protected ArrayList<Float> genVertexCoords() {
+		ArrayList<Float> coords = new ArrayList<Float>();
+		// @formatter:off
+		for(float i = 0; i < _gridSizeX; i++) {
+			coords.add(i); coords.add( -0.5f ); coords.add(0.0f);
+			coords.add(i); coords.add( 0.5f ); coords.add(0.0f);
+		}
+		// @formatter:on
+		return coords;
+	}
+
+	protected ArrayList<Float> genTextureCoords() {
+		ArrayList<Float> coords = new ArrayList<Float>();
+		// @formatter:off
+		for(float i = 0; i < _gridSizeX; i++) {
+			coords.add(i); coords.add( 1.0f );
+			coords.add(i); coords.add( 0.0f );
+		}
+		// @formatter:on
+		return coords;
+	}
+
+	protected ArrayList<Integer> genDrawOrder(int i) {
+		ArrayList<Integer> order = new ArrayList<Integer>();
+		int upper = 2*_gridSizeX;
+		
+		for (int a = 0; a < upper; a++)
+			order.add(i + a);
+		order.add(i + upper-1);
+		order.add(i + upper);
+		
+		return order;
+	}
+
 
 //	/**
 //	 * This method is needed for cloudmine use

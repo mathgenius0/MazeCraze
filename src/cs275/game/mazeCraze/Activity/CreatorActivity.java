@@ -81,7 +81,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 			//TODO
 			break;
 		case R.id.btnsave:
-			creator.getGrid().save();
+			creator.getGrid().save(responseCallback);
 			break;
 		}
 	}

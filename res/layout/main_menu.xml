@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/faded_brick"
     android:orientation="vertical" >
 
     <ImageView
@@ -10,10 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnrandom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:contentDescription="@string/desclogo"
-        android:src="@drawable/red_brick" />
+        android:src="@drawable/logo" />
 
     <Button
         android:id="@+id/btnrandom"

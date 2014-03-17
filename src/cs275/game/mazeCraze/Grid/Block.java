@@ -189,6 +189,7 @@ public enum Block {
 		public int getColor() { return Color.BLUE; }
 	};
 	
+	
 	public abstract String toString();
 
 	public void generateBuffers(Graphic graphic, int x, int y) {

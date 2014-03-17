@@ -104,6 +104,8 @@ public enum MazeGenerator {
 			for ( int x = 0; x < grid.getGridSizeX(); x += 2 ) {
 				grid.toggleBlock( x, y );
 			}
+		
+		//grid.addBorder();
 		return grid;
 	}
 }
