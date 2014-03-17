@@ -86,10 +86,10 @@ public class Grid extends CMObject {
 			traversible = false;
 		else if ( x >= _gridSizeX || y >= _gridSizeY )
 			traversible = false;
-		if ( getBlock(x, y) == Block.FLOOR ) {
-			traversible = true;
-		} else
+		if ( getBlock(x, y) == Block.WALL ) {
 			traversible = false;
+		} else
+			traversible = true;
 		
 		return traversible;
 	}
@@ -150,11 +150,11 @@ public class Grid extends CMObject {
 			}
 	}
 
-	/**
-	 * This method is needed for cloudmine use
-	 */
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
-	}
+//	/**
+//	 * This method is needed for cloudmine use
+//	 */
+//	@Override
+//	public String getClassName() {
+//		return CLASS_NAME;
+//	}
 }

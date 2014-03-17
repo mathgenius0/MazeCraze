@@ -18,7 +18,6 @@ import com.cloudmine.api.rest.response.ObjectModificationResponse;
 
 import cs275.game.mazeCraze.R;
 import cs275.game.mazeCraze.Graphics.Graphic;
-import cs275.game.mazeCraze.Grid.Grid;
 import cs275.game.mazeCraze.View.MazeCreatorView;
 
 /**
@@ -29,7 +28,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 
 	private static final String APP_ID = "849d9c0416c54f8b9b9569717b67ead3";
 	private static final String API_KEY = "4d0454120b944a63a14eb9d645088460";
-	private Grid grid;
+	private MazeCreatorView creator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 		LinearLayout layout = (LinearLayout) findViewById( R.id.laycreator );
 		
 		// Make the creator view for display, which needs the grid //
-		MazeCreatorView creator = new MazeCreatorView(this, sizeX, sizeY, walls, floors, name);
+		creator = new MazeCreatorView(this, sizeX, sizeY, walls, floors, name);
 		layout.addView( creator );
 		
 		// Create the buttons //
@@ -62,7 +61,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		ObjectModificationResponseCallback responseCallback = new ObjectModificationResponseCallback() { //TODO no response
+		ObjectModificationResponseCallback responseCallback = new ObjectModificationResponseCallback() {
 			public void onCompletion(ObjectModificationResponse response) {
 				if ( response.wasSuccess() )
 					Toast.makeText( CreatorActivity.this, "Grid successfully saved", Toast.LENGTH_SHORT ).show();
@@ -82,12 +81,12 @@ public class CreatorActivity extends Activity implements OnClickListener {
 			//TODO
 			break;
 		case R.id.btnsave:
-			grid.save(responseCallback);
+			creator.getGrid().save(responseCallback);
 			break;
 		}
 	}
 
-	static {
-		ClassNameRegistry.register( Grid.CLASS_NAME, Grid.class );
-	}
+//	static {
+//		ClassNameRegistry.register( Grid.CLASS_NAME, Grid.class );
+//	}
 }
