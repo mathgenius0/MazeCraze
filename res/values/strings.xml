@@ -1,13 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Maze 3D</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="generate">Generate</string>
-    <string name="options">Options</string>
-    <string name="save">Save</string>
+    <string name="lblsave">Save</string>
     <string name="lblreturn">Return</string>
-    <string name="mazeCreationInstructions">Welcome to the maze creation menu!  Please click on the blocks below to toggle between traversible (green) and non-traversible (red). The start and end blocks (blue) must connect.</string>
+    <string name="lblinstructions">Welcome to the maze creation menu!  Please click on the blocks below to toggle between traversible (green) and non-traversible (red). The start and end blocks (blue) must connect.</string>
+    <string name="hintname">Name of maze</string>
+    <string name="hintcreator">Username of creator of maze</string>
+    <string name="lbldescription">Enter the appropriate information:</string>
+    <string name="lbloptions">Maze Creation Options</string>
+    <string name="lblstyle">Maze Style:</string>
+    <string name="lblwalls">Walls:</string>
+    <string name="lblfloors">Floor:</string>
+    <string name="lblsize">Size</string>
+    <string name="lblsizedelimiter">x</string>
+    <string name="desclogo">Maze Craze logo</string>
+    <string name="lblrandom">Play Random Maze</string>
+    <string name="lblcreated">Load Created Maze</string>
+    <string name="lblcreate">Create Maze</string>
+    <string name="lblgenerate">Generate</string>
+    <string name="lblalgorithm">Algorithm:</string>
 
 </resources>

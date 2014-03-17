@@ -1,18 +1,14 @@
 package cs275.game.mazeCraze;
 
+import cs275.game.mazeCraze.Generator.MazeGenerator;
+import cs275.game.mazeCraze.Graphics.Graphic;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
-
-import com.cloudmine.api.rest.callbacks.ObjectModificationResponseCallback;
-import com.cloudmine.api.rest.response.ObjectModificationResponse;
 
 public class MazeCreatorView extends View {
 
@@ -20,8 +16,8 @@ public class MazeCreatorView extends View {
 	private Bitmap _bitmap;
 	private Canvas _canvas;
 	private Grid _grid;
-	private int _gridX;
-	private int _gridY;
+	
+	// Generation math variables // 
 	private float _size;
 	private float _topX;
 	private float _topY;
@@ -29,68 +25,76 @@ public class MazeCreatorView extends View {
 	private int _viewY;
 	int _previousX = -1;
 	int _previousY = -1;
-	private Context _context;
+
+	//TODO check for completed maze!! 
+
  
 	public MazeCreatorView(Context context, AttributeSet attrs) {
 		super( context, attrs );
-		_context = context;
-		
-		ObjectModificationResponseCallback responseCallback = new ObjectModificationResponseCallback() {
-			public void onCompletion(ObjectModificationResponse response) {
-				if ( response.wasSuccess() )
-					Toast.makeText( _context, "Grid Saved", Toast.LENGTH_SHORT ).show();
-			}
-
-			public void onFailure(Throwable e, String msg) {
-				Log.v( "cloudmine", "Failed to save grid", e );
-			}
-		};
-		
-		_grid = new MazeGenerator().KruskalGenerate( 11, 11 );
-		if ( !isInEditMode() )
-			_grid.save(responseCallback);
-		_gridX = _grid.getGridSizeX();
-		_gridY = _grid.getGridSizeY();
+		_grid = MazeGenerator.KRUSKAL.generate(25, 25, Graphic.BRICK, Graphic.DIRT);	
 	}
 
+	/**
+	 * Has a grid of size sizeX x sizeY with walls as designated by the two graphic parameters.
+	 */
+	public MazeCreatorView(Context context, int sizeX, int sizeY, Graphic walls, Graphic floors, String name) {
+		super(context);
+		_grid = new Grid( sizeX, sizeY, walls, floors, name );
+	}
+
+	/**
+	 * It has to instantiate independent from its initialization, i.e. the
+	 * details regarding its size are added some delay after it is initially created. 
+	 */
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged( w, h, oldw, oldh );
 		_viewX = w;
 		_viewY = h;
-		_size = Math.min( w / _gridX, h / _gridY );
-		_bitmap = Bitmap.createBitmap( Math.round( _size * _gridX ), Math.round( _size * _gridY ),
+		_size = Math.min( w / _grid.getGridSizeX(), h / _grid.getGridSizeY() );
+		_bitmap = Bitmap.createBitmap( Math.round( _size * _grid.getGridSizeX() ), Math.round( _size * _grid.getGridSizeY() ),
 				Bitmap.Config.ARGB_8888 );
 		_canvas = new Canvas( _bitmap );
 		updateBitmap();
 	}
 
+	/**
+	 * This function actually draws (or displays) this view on the menu screen (a.k.a. canvas).
+	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw( canvas );
-		_topX = Math.abs( _size * _gridX - _viewX ) / 2;
-		_topY = Math.abs( _size * _gridY - _viewY ) / 2;
+		_topX = Math.abs( _size * _grid.getGridSizeX() - _viewX ) / 2;
+		_topY = Math.abs( _size * _grid.getGridSizeY() - _viewY ) / 2;
 		canvas.drawBitmap( _bitmap, _topX, _topY, paint );
 	}
 
+	/**
+	 * This controls the colors of the blocks.
+	 */
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int selectx = (int) Math.floor( ( event.getX() - _topX ) / _size );
 		int selecty = (int) Math.floor( ( event.getY() - _topY ) / _size );
-		if ( event.getAction() == MotionEvent.ACTION_DOWN ) {
+		
+		// If clicked, toggle block //
+		if ( event.getAction() == MotionEvent.ACTION_DOWN ) { //TODO check this comment
+			
 			try {
 				_grid.toggleBlock( selectx, selecty );
 			} catch ( Exception e ) {
 			}
 			updateBitmap();
 		}
+		
+		// If moved over, still toggle block //
 		if ( event.getAction() == MotionEvent.ACTION_MOVE ) {
 			if ( _previousX != selectx || _previousY != selecty ) {
 				try {
 					_grid.toggleBlock( selectx, selecty );
 				} catch ( Exception e ) {
 				}
-				updateBitmap();
+				updateBitmap(); //TODO find out why this is repeated twice.... can this be one if statement?
 			}
 		}
 		_previousX = selectx;
@@ -99,16 +103,19 @@ public class MazeCreatorView extends View {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	public void updateBitmap() {
-		for ( int y = 0; y < _gridY; y++ ) {
-			for ( int x = 0; x < _gridX; x++ ) {
-				if ( _grid.isTraversible( x, y ) )
-					paint.setColor( Color.GREEN );
-				else
-					paint.setColor( Color.RED );
+		for ( int y = 0; y < _grid.getGridSizeY(); y++ ) {
+			for ( int x = 0; x < _grid.getGridSizeX(); x++ ) {
+				paint.setColor( _grid.getBlock(x, y).getColor() );
 				_canvas.drawRect( x * _size, y * _size, ( x + 1 ) * _size, ( y + 1 ) * _size, paint );
 			}
 		}
 	}
 
+	public Grid getGrid() {
+		return _grid;
+	}
 }

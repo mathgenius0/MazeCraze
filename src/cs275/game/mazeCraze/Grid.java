@@ -4,8 +4,13 @@ import java.util.ArrayList;
 
 import com.cloudmine.api.CMObject;
 
+import cs275.game.mazeCraze.Graphics.Graphic;
+
 public class Grid extends CMObject {
-	private static final String CLASS_NAME = "Grid";
+	public static final String CLASS_NAME = "Grid";
+	private String _name;
+	private Graphic _wallstyle;
+	private Graphic _floorstyle;
 	private int _gridSizeX;
 	private int _gridSizeY;
 	private ArrayList<ArrayList<Block> > _blocks;
@@ -20,6 +25,17 @@ public class Grid extends CMObject {
 		initialize();
 	}
 
+	public Grid(int x, int y, Graphic wallstyle, Graphic floorstyle) {
+		this( x, y );
+		_wallstyle = wallstyle;
+		_floorstyle = floorstyle;
+	}
+
+	public Grid(int x, int y, Graphic wallstyle, Graphic floorstyle, String name) {
+		this( x, y, wallstyle, floorstyle );
+		_name = name;
+	}
+
 	public void initialize() {
 		for ( int y = 0; y < _gridSizeY; y++ ) {
 			ArrayList<Block> row = new ArrayList<Block>();
@@ -27,6 +43,13 @@ public class Grid extends CMObject {
 				row.add( Block.WALL );
 			_blocks.add( row );
 		}
+
+		initializeTerminals();
+	}
+	
+	public void initializeTerminals() {
+		setBlock(0, 0, Block.ENTRANCE);
+		setBlock( (_gridSizeX-1), (_gridSizeY-1), Block.EXIT);
 	}
 
 	/**
@@ -40,10 +63,10 @@ public class Grid extends CMObject {
 		if ( x >= _gridSizeX || y >= _gridSizeY )
 			throw exception;
 
-		if ( isTraversible(x, y) ) {
-			_blocks.get( y ).set( x, Block.WALL);
-		} else
-			_blocks.get( y ).set( x, Block.FLOOR);
+		if ( isTraversible(x, y) )
+			setBlock(x, y, Block.WALL);
+		else
+			setBlock(x, y, Block.FLOOR);
 
 		
 	}
@@ -53,41 +76,39 @@ public class Grid extends CMObject {
 	 */
 	public boolean isTraversible(int x, int y) {
 		boolean traversible;
+		
 		if ( x < 0 || y < 0 )
 			traversible = false;
 		else if ( x >= _gridSizeX || y >= _gridSizeY )
 			traversible = false;
-		else if( _blocks.get(y).get(x) == Block.WALL )
+		else if ( getBlock(x, y) == Block.WALL )
 			traversible = false;
 		else
 			traversible = true;
 		
 		return traversible;
 	}
+	
+	public String getName() { return _name; }
+	public void setName(String name) { _name = name; }
+	
+	public Graphic getWallStyle() { return _wallstyle; }
+	public void setWallStyle(Graphic wallstyle) { _wallstyle = wallstyle; }
+	
+	public Graphic getFloorStyle() { return _floorstyle; }
+	public void setFloorStyle(Graphic floorstyle) { _floorstyle = floorstyle; }
 
-	public ArrayList<ArrayList<Block> > getBlocks() {
-		return _blocks;
-	}
+	public int getGridSizeX() { return _gridSizeX; }
+	public void setGridSizeX(int x) { _gridSizeX = x; }
 
-	public void setBlocks(ArrayList<ArrayList<Block> > blocks) {
-		_blocks = blocks;
-	}
+	public int getGridSizeY() { return _gridSizeY; }
+	public void setGridSizeY(int y) { _gridSizeY = y; }
 
-	public int getGridSizeX() {
-		return _gridSizeX;
-	}
-
-	public void setGridSizeX(int x) {
-		_gridSizeX = x;
-	}
-
-	public int getGridSizeY() {
-		return _gridSizeY;
-	}
-
-	public void setGridSizeY(int y) {
-		_gridSizeY = y;
-	}
+	public ArrayList<ArrayList<Block> > getBlocks() { return _blocks; }
+	public void setBlocks(ArrayList<ArrayList<Block> > blocks) { _blocks = blocks; }
+	
+	public Block getBlock(int x, int y) { return _blocks.get(y).get(x); }
+	public void setBlock(int x, int y, Block b) { _blocks.get(y).set(x, b); }
 
 	public String toString() {
 		String str = "";
@@ -104,8 +125,60 @@ public class Grid extends CMObject {
 	public void generateBuffers() {
 		for ( int y = 0; y < _gridSizeY; y++ )
 			for ( int x = 0; x < _gridSizeX; x++ ) {
-				_blocks.get( y ).get( x ).generateBuffers( x, y );
+				Block current = getBlock(x, y);
+				switch ( current ) {
+				case WALL:
+					current.generateBuffers( _wallstyle, x, y );
+					break;
+				case FLOOR:
+					current.generateBuffers( _floorstyle, x, y );
+					break;
+				case ENTRANCE://TODO how should this differ?
+					current.generateBuffers( _floorstyle, x, y );
+					break;
+				case EXIT://TODO how does this differ?
+					current.generateBuffers( _floorstyle, x, y );
+					break;
+				}
 			}
+		
+		Graphic graphic = Graphic.BRICK;
+		graphic.appendArrays( genVertexCoords(), genTextureCoords(), genDrawOrder( graphic.getVertexCount() ) );
+	}
+	
+
+	protected ArrayList<Float> genVertexCoords() {
+		ArrayList<Float> coords = new ArrayList<Float>();
+		// @formatter:off
+		for(float i = 0; i < _gridSizeX; i++) {
+			coords.add(i); coords.add( -0.5f ); coords.add(0.0f);
+			coords.add(i); coords.add( 0.5f ); coords.add(0.0f);
+		}
+		// @formatter:on
+		return coords;
+	}
+
+	protected ArrayList<Float> genTextureCoords() {
+		ArrayList<Float> coords = new ArrayList<Float>();
+		// @formatter:off
+		for(float i = 0; i < _gridSizeX; i++) {
+			coords.add(i); coords.add( 1.0f );
+			coords.add(i); coords.add( 0.0f );
+		}
+		// @formatter:on
+		return coords;
+	}
+
+	protected ArrayList<Integer> genDrawOrder(int i) {
+		ArrayList<Integer> order = new ArrayList<Integer>();
+		int upper = 2*_gridSizeX;
+		
+		for (int a = 0; a < upper; a++)
+			order.add(i + a);
+		order.add(i + upper-1);
+		order.add(i + upper);
+		
+		return order;
 	}
 
 	/**

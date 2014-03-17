@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/btnsave"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/lblsave" />
+
+    <TextView
+        android:id="@+id/mazeCreationInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/lblinstructions" />
+
+    <Button
+        android:id="@+id/btngenerate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/lblgenerate" />
+
+    <Button
+        android:id="@+id/btnreturn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/lblreturn" />
+
+    <LinearLayout
+        android:id="@+id/laycreator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnsave"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/mazeCreationInstructions"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+<!-- 	<cs275.game.mazeCraze.MazeCreatorView -->
+<!--         android:id="@+id/mazeCreatorView1" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_above="@+id/btngenerate" -->
+<!--         android:layout_alignParentLeft="true" -->
+<!--         android:layout_alignParentRight="true" -->
+<!--         android:layout_below="@+id/mazeCreationInstructions" /> -->
+
+</RelativeLayout>

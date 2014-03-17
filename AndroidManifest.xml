@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="cs275.game.mazeCraze.MazeActivity"
+            android:name="cs275.game.mazeCraze.Activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
@@ -27,6 +27,46 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="cs275.game.mazeCraze.Activity.CreatorOptionsActivity"
+            android:parentActivityName="cs275.game.mazeCraze.Activity.MainActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cs275.game.mazeCraze.Activity.MainActivity" />
+        </activity>
+        <activity
+            android:name="cs275.game.mazeCraze.Activity.CreatorActivity"
+            android:parentActivityName="cs275.game.mazeCraze.Activity.CreatorOptionsActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cs275.game.mazeCraze.Activity.MazeActivity" />
+        </activity>
+        <activity
+            android:name="cs275.game.mazeCraze.Activity.LoadActivity"
+            android:parentActivityName="cs275.game.mazeCraze.Activity.MainActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cs275.game.mazeCraze.Activity.MazeActivity" />
+        </activity>
+        <activity
+            android:name="cs275.game.mazeCraze.Activity.RandomActivity"
+            android:parentActivityName="cs275.game.mazeCraze.Activity.MainActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cs275.game.mazeCraze.Activity.MazeActivity" />
+        </activity>
+        <activity
+            android:name="cs275.game.mazeCraze.Activity.NavigatorActivity"
+            android:parentActivityName="cs275.game.mazeCraze.Activity.RandomActivity"
+            android:screenOrientation="landscape" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cs275.game.mazeCraze.Activity.MazeActivity" />
         </activity>
     </application>
 
