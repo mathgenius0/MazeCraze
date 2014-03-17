@@ -5,7 +5,7 @@
     <string name="lblreturn">Return</string>
     <string name="lblinstructions">Welcome to the maze creation menu!  Please click on the blocks below to toggle between traversible (green) and non-traversible (red). The start and end blocks (blue) must connect.</string>
     <string name="hintname">Name of maze</string>
-    <string name="hintcreator">Username of creator of maze</string>
+    <string name="hintcreator">Username or creator of maze</string>
     <string name="lbldescription">Enter the appropriate information:</string>
     <string name="lbloptions">Maze Creation Options</string>
     <string name="lblstyle">Maze Style:</string>
@@ -19,5 +19,6 @@
     <string name="lblcreate">Create Maze</string>
     <string name="lblgenerate">Generate</string>
     <string name="lblalgorithm">Algorithm:</string>
+    <string name="lblsearch">Search</string>
 
 </resources>

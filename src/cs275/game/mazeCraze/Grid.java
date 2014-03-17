@@ -9,6 +9,7 @@ import cs275.game.mazeCraze.Graphics.Graphic;
 public class Grid extends CMObject {
 	public static final String CLASS_NAME = "Grid";
 	private String _name;
+	private String _creator;
 	private Graphic _wallstyle;
 	private Graphic _floorstyle;
 	private int _gridSizeX;
@@ -92,6 +93,9 @@ public class Grid extends CMObject {
 	public String getName() { return _name; }
 	public void setName(String name) { _name = name; }
 	
+	public String getCreator() { return _creator; }
+	public void setCreator(String creator) { _creator = creator; }
+	
 	public Graphic getWallStyle() { return _wallstyle; }
 	public void setWallStyle(Graphic wallstyle) { _wallstyle = wallstyle; }
 	
@@ -142,7 +146,7 @@ public class Grid extends CMObject {
 				}
 			}
 		
-		Graphic graphic = Graphic.BRICK;
+		Graphic graphic = _wallstyle;
 		graphic.appendArrays( genVertexCoords(), genTextureCoords(), genDrawOrder( graphic.getVertexCount() ) );
 	}
 	

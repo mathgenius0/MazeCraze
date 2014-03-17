@@ -33,29 +33,30 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f080005;
-        public static final int btncreate=0x7f080015;
+        public static final int btncreate=0x7f080018;
         public static final int btngenerate=0x7f080002;
-        public static final int btnload=0x7f080018;
+        public static final int btnload=0x7f080019;
         public static final int btnrandom=0x7f080017;
         public static final int btnreturn=0x7f080003;
         public static final int btnsave=0x7f080000;
+        public static final int btnsearch=0x7f080013;
         public static final int btnstartcreate=0x7f080012;
         public static final int imglogo=0x7f080016;
         public static final int laycreator=0x7f080004;
         public static final int laystyle=0x7f080006;
-        public static final int lblalgoritm=0x7f080019;
+        public static final int lblalgoritm=0x7f08001a;
         public static final int lblfloor=0x7f08000a;
         public static final int lbloptions=0x7f08000c;
         public static final int lblsize=0x7f08000e;
         public static final int lblsizedelimiter=0x7f080010;
         public static final int lblstyle=0x7f080007;
         public static final int lblwalls=0x7f080008;
-        public static final int lstResults=0x7f080014;
+        public static final int lstResults=0x7f080015;
         public static final int mazeCreationInstructions=0x7f080001;
-        public static final int spinalgorithm=0x7f08001a;
+        public static final int spinalgorithm=0x7f08001b;
         public static final int spinfloor=0x7f08000b;
         public static final int spinwall=0x7f080009;
-        public static final int txtMazeCreator=0x7f080013;
+        public static final int txtMazeCreator=0x7f080014;
         public static final int txtgridx=0x7f08000f;
         public static final int txtgridy=0x7f080011;
         public static final int txtname=0x7f08000d;
@@ -87,6 +88,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int lblrandom=0x7f06000e;
         public static final int lblreturn=0x7f060002;
         public static final int lblsave=0x7f060001;
+        public static final int lblsearch=0x7f060013;
         public static final int lblsize=0x7f06000b;
         public static final int lblsizedelimiter=0x7f06000c;
         public static final int lblstyle=0x7f060008;

@@ -115,7 +115,11 @@ public class MazeCreatorView extends View {
 		}
 	}
 
-	public Grid getGrid() {
-		return _grid;
-	}
+	public Grid getGrid() { return _grid; }
+
+	/**
+	 * Set creator of this particular maze for use in locating the maze on Cloudmine later.
+	 * @param creator For now, this is a String. Later, we will add a User class or similar. 
+	 */
+	public void setCreator(String creator) { _grid.setCreator(creator); }
 }

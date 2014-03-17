@@ -4,33 +4,30 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.cloudmine.api.CMApiCredentials;
-import com.cloudmine.api.rest.callbacks.ObjectModificationResponseCallback;
-import com.cloudmine.api.rest.response.ObjectModificationResponse;
 
+import cs275.game.mazeCraze.CloudMineClient;
 import cs275.game.mazeCraze.MazeCreatorView;
 import cs275.game.mazeCraze.R;
 import cs275.game.mazeCraze.Graphics.Graphic;
 
 public class CreatorActivity extends Activity implements OnClickListener {
-
-	// Find this in your developer console
-	private static final String APP_ID = "849d9c0416c54f8b9b9569717b67ead3";
-	// Find this in your developer console
-	private static final String API_KEY = "4d0454120b944a63a14eb9d645088460";
 	
-	MazeCreatorView creator;
+	MazeCreatorView creatorView;
+	
+	CloudMineClient cmClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
+		
+		cmClient = new CloudMineClient(CreatorActivity.this, "Grid successfully saved.", "Grid failed to save.");
+		CMApiCredentials.initialize(cmClient.getAppId(), cmClient.getApiKey(), getApplicationContext());
 		
 		// Import the intent, i.e. the input from the previous menu //
 		Intent intent = getIntent();
@@ -39,14 +36,13 @@ public class CreatorActivity extends Activity implements OnClickListener {
 		int sizeY = intent.getIntExtra("gridy", 10);
 		Graphic walls = Graphic.valueOf(intent.getStringExtra("walls"));
 		Graphic floors = Graphic.valueOf(intent.getStringExtra("floors"));
-
-		CMApiCredentials.initialize(APP_ID, API_KEY, getApplicationContext());
+		
 		setContentView(R.layout.creator_menu);
 		LinearLayout layout = (LinearLayout) findViewById(R.id.laycreator);
 
 		// Make the creator view for display, which needs the grid //
-		creator = new MazeCreatorView(this, sizeX, sizeY, walls, floors, name);
-		layout.addView(creator);
+		creatorView = new MazeCreatorView(this, sizeX, sizeY, walls, floors, name);
+		layout.addView(creatorView);
 
 		// Create the buttons //
 		Button returnButton = (Button) findViewById(R.id.btnreturn);
@@ -58,19 +54,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 	}
 	
 	@Override
-	public void onClick(View v) {
-		ObjectModificationResponseCallback responseCallback = new ObjectModificationResponseCallback() {
-			public void onCompletion(ObjectModificationResponse response) {
-				if ( response.wasSuccess() )
-					Toast.makeText( CreatorActivity.this, "Grid successfully saved", Toast.LENGTH_SHORT ).show();
-			}
-
-			public void onFailure(Throwable e, String msg) {
-				Log.v( "cloudmine", "failed to save grid", e );
-				Toast.makeText( CreatorActivity.this, "Grid failed to save", Toast.LENGTH_SHORT ).show();
-			}
-		}; 
-		
+	public void onClick(View v) {		
 		switch ( v.getId() ) {
 		case R.id.btnreturn:
 			NavUtils.navigateUpFromSameTask( this );
@@ -79,7 +63,8 @@ public class CreatorActivity extends Activity implements OnClickListener {
 			//TODO
 			break;
 		case R.id.btnsave:
-			creator.getGrid().save(responseCallback);
+			creatorView.setCreator("default");
+			creatorView.getGrid().save( cmClient.getResponseCallBack() );
 			break;
 		}
 	}

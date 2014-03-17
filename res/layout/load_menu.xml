@@ -11,12 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/lbloptions"
+        android:layout_toLeftOf="@+id/btnsearch"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/hintname"
-        android:inputType="text" >
+        android:inputType="text"
+        android:textAlignment="center" >
 
         <requestFocus />
     </EditText>
@@ -37,28 +37,28 @@
         android:id="@+id/lstResults"
         android:layout_width="match_parent"
         android:layout_height="258dp"
-        android:layout_above="@+id/btncreate"
+        android:layout_above="@+id/btnreturn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/txtMazeCreator" >
     </ListView>
 
-    <TextView
-        android:id="@+id/lbloptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/lbldescription"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
-        android:id="@+id/btncreate"
+        android:id="@+id/btnreturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:text="@string/lblreturn" />
+
+    <Button
+        android:id="@+id/btnsearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtgridx"
+        android:layout_alignBottom="@+id/txtgridx"
+        android:layout_alignParentRight="true"
+        android:text="@string/lblsearch" />
 
 </RelativeLayout>
