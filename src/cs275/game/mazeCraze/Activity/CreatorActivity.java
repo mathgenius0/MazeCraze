@@ -60,7 +60,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 			//TODO
 			break;
 		case R.id.btnsave:
-			grid.save( new ObjectModificationResponseCallback() {
+			grid.save( new ObjectModificationResponseCallback() { //TODO no response
 				public void onCompletion(ObjectModificationResponse response) {
 					if ( response.wasSuccess() )
 						Toast.makeText( CreatorActivity.this, "Grid successfully saved", Toast.LENGTH_SHORT ).show();

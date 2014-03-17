@@ -77,13 +77,13 @@ public class Grid extends CMObject {
 		return traversible;
 	}
 
-//	public ArrayList<ArrayList<Blocks>> getBlocks() {
-//		return _blocks;
-//	}
-//
-//	public void setBlocks(ArrayList<ArrayList<Blocks>> blocks) {
-//		_blocks = blocks;
-//	}
+	public ArrayList<ArrayList<Blocks>> getBlocks() {
+		return _blocks;
+	}
+
+	public void setBlocks(ArrayList<ArrayList<Blocks>> blocks) {
+		_blocks = blocks;
+	}
 
 	public int getGridSizeX() {
 		return _gridSizeX;
@@ -101,29 +101,29 @@ public class Grid extends CMObject {
 		_gridSizeY = y;
 	}
 
-//	public String getName() {
-//		return _name;
-//	}
-//
-//	public void setName(String name) {
-//		_name = name;
-//	}
-//
-//	public Graphic getWallStyle() {
-//		return _wallstyle;
-//	}
-//
-//	public void setWallStyle(Graphic wallstyle) {
-//		_wallstyle = wallstyle;
-//	}
-//
-//	public Graphic getFloorStyle() {
-//		return _floorstyle;
-//	}
-//
-//	public void setFloorStyle(Graphic floorstyle) {
-//		_floorstyle = floorstyle;
-//	}
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public Graphic getWallStyle() {
+		return _wallstyle;
+	}
+
+	public void setWallStyle(Graphic wallstyle) {
+		_wallstyle = wallstyle;
+	}
+
+	public Graphic getFloorStyle() {
+		return _floorstyle;
+	}
+
+	public void setFloorStyle(Graphic floorstyle) {
+		_floorstyle = floorstyle;
+	}
 
 	public String toString() {
 		String str = "";
