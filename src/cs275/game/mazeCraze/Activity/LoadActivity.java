@@ -2,18 +2,19 @@ package cs275.game.mazeCraze.Activity;
 
 import java.util.ArrayList;
 
-import com.cloudmine.api.CMApiCredentials;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemLongClickListener;
+
+import com.cloudmine.api.CMApiCredentials;
+
 import cs275.game.mazeCraze.CloudMineClient;
 import cs275.game.mazeCraze.Grid;
 import cs275.game.mazeCraze.MazeNavigatorView;
