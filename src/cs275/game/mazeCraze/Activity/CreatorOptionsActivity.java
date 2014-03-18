@@ -14,32 +14,35 @@ import cs275.game.mazeCraze.R;
 import cs275.game.mazeCraze.Graphics.Graphic;
 
 /**
- *	Contains the create and clickable activity for the creator options menu.		 
- *
+ * Contains the create and clickable activity for the creator options menu.
+ * 
  */
 public class CreatorOptionsActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
+
+		// Initialize the view //
 		setContentView( R.layout.creator_options_menu );
-		
+
 		Button returnButton = (Button) findViewById( R.id.btnreturn );
 		returnButton.setOnClickListener( this );
-		
+
 		Button generateButton = (Button) findViewById( R.id.btnstartcreate );
 		generateButton.setOnClickListener( this );
-		
+
+		// Setup adapters for the spinners //
 		Spinner wallSelectionBox = (Spinner) findViewById( R.id.spinwall );
 		Spinner floorSelectionBox = (Spinner) findViewById( R.id.spinfloor );
-		ArrayAdapter<Graphic> wallGraphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
-				Graphic.getWallValues() );
-		ArrayAdapter<Graphic> floorGraphicAdapter = new ArrayAdapter<Graphic>( this, android.R.layout.simple_spinner_item,
-				Graphic.getFloorValues() );
-		
+		ArrayAdapter<Graphic> wallGraphicAdapter = new ArrayAdapter<Graphic>( this,
+				android.R.layout.simple_spinner_item, Graphic.getWallValues() );
+		ArrayAdapter<Graphic> floorGraphicAdapter = new ArrayAdapter<Graphic>( this,
+				android.R.layout.simple_spinner_item, Graphic.getFloorValues() );
+
 		wallGraphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
 		floorGraphicAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-		
+
 		wallSelectionBox.setAdapter( wallGraphicAdapter );
 		floorSelectionBox.setAdapter( floorGraphicAdapter );
 	}
@@ -51,6 +54,7 @@ public class CreatorOptionsActivity extends Activity implements OnClickListener 
 			NavUtils.navigateUpFromSameTask( this );
 			break;
 		case R.id.btnstartcreate:
+			// Get the user inputed values and send them to the Creator Activity through an intent //
 			Intent intent = new Intent( this, CreatorActivity.class );
 			String name = ( (TextView) findViewById( R.id.txtname ) ).getText().toString();
 			intent.putExtra( "name", name );

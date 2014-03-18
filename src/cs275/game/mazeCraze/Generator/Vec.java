@@ -7,25 +7,7 @@ import java.util.ArrayList;
  * 
  */
 class Vec implements Comparable<Vec> {
-	@Override
-	public boolean equals(Object other) {
-		Vec o = (Vec) other;
-		return ( o.getX() == getX() && o.getY() == getY() );
-	}
-
-	public ArrayList<Edge> getPossible(int sizeX, int sizeY) {
-		ArrayList<Edge> possible = new ArrayList<Edge>();
-		if ( getX() + 1 < ( sizeX + 1 ) / 2 )
-			possible.add( new Edge( this, new Vec( getX() + 1, getY() ) ) );
-		if ( getY() + 1 < ( sizeY + 1 ) / 2 )
-			possible.add( new Edge( this, new Vec( getX(), getY() + 1 ) ) );
-		if ( ( getX() - 1 ) >= 0 )
-			possible.add( new Edge( this, new Vec( getX() - 1, getY() ) ) );
-		if ( ( getY() - 1 ) >= 0 )
-			possible.add( new Edge( this, new Vec( getX(), getY() - 1 ) ) );
-		return possible;
-	}
-
+	// Vec is a collection of two coordinates representing a vertex in our graph
 	private int _x, _y;
 
 	public Vec(int x, int y) {
@@ -33,12 +15,15 @@ class Vec implements Comparable<Vec> {
 		setY( y );
 	}
 
-	public String toString() {
-		return "(" + getX() + "," + getY() + ")";
+	@Override
+	public boolean equals(Object other) {
+		Vec o = (Vec) other;
+		return ( o.getX() == getX() && o.getY() == getY() );
 	}
 
 	@Override
 	public int compareTo(Vec o) {
+		// this is creating an unique ordering of vertices so that we can use them in a TreeSet //
 		if ( o.getX() > getX() )
 			return 1;
 		else if ( o.getX() < getX() )
@@ -51,6 +36,24 @@ class Vec implements Comparable<Vec> {
 			else
 				return 0;
 		}
+	}
+
+	public String toString() {
+		return "(" + getX() + "," + getY() + ")";
+	}
+
+	public ArrayList<Edge> getPossible(int sizeX, int sizeY) {
+		// This finds all the edges that originate from this vertex which are still in the grid //
+		ArrayList<Edge> possible = new ArrayList<Edge>();
+		if ( getX() + 1 < ( sizeX + 1 ) / 2 )
+			possible.add( new Edge( this, new Vec( getX() + 1, getY() ) ) );
+		if ( getY() + 1 < ( sizeY + 1 ) / 2 )
+			possible.add( new Edge( this, new Vec( getX(), getY() + 1 ) ) );
+		if ( ( getX() - 1 ) >= 0 )
+			possible.add( new Edge( this, new Vec( getX() - 1, getY() ) ) );
+		if ( ( getY() - 1 ) >= 0 )
+			possible.add( new Edge( this, new Vec( getX(), getY() - 1 ) ) );
+		return possible;
 	}
 
 	public int getY() {

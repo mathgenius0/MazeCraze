@@ -1,13 +1,8 @@
 package cs275.game.mazeCraze.Generator;
 
 class MergeFind<E> {
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean equals(Object o) {
-		MergeFind<E> other = (MergeFind<E>) o;
-		return data.equals( other.data );
-	}
-
+	// This is an implementation of the standard Merge Find abstract data structure //
+	// It also includes path compression in it's find method for increased efficiency //
 	private E data;
 	private MergeFind<E> parent;
 	private int rank;
@@ -37,5 +32,12 @@ class MergeFind<E> {
 		if ( parent != this )
 			parent = parent.find();
 		return parent;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object o) {
+		MergeFind<E> other = (MergeFind<E>) o;
+		return data.equals( other.data );
 	}
 }

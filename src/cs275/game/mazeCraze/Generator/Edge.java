@@ -1,22 +1,24 @@
 package cs275.game.mazeCraze.Generator;
 
-
 /**
  * TODO
  * 
  */
 class Edge {
-	@Override
-	public boolean equals(Object other) {
-		Edge o = (Edge) other;
-		return ( o.getFrom().equals( getFrom() ) && o.getTo().equals( getTo() ) || ( o.getFrom().equals( getTo() ) && o.getTo().equals( getFrom() ) ) );
-	}
-
+	// An edge is a collection of a 2 vectors representing the path between two vertices in our graph //
 	private Vec _from, _to;
 
 	public Edge(Vec from, Vec to) {
 		setFrom( from );
 		setTo( to );
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		Edge o = (Edge) other;
+		// Edges are equal if they are the same in either direction //
+		return ( o.getFrom().equals( getFrom() ) && o.getTo().equals( getTo() ) || ( o.getFrom().equals( getTo() ) && o
+				.getTo().equals( getFrom() ) ) );
 	}
 
 	public String toString() {
