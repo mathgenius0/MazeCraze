@@ -3,17 +3,15 @@ package cs275.game.mazeCraze;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import cs275.game.mazeCraze.Generator.MazeGenerator;
-import cs275.game.mazeCraze.Graphics.Camera;
-import cs275.game.mazeCraze.Graphics.Graphic;
-
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
+import cs275.game.mazeCraze.Generator.MazeGenerator;
+import cs275.game.mazeCraze.Graphics.Camera;
+import cs275.game.mazeCraze.Graphics.Graphic;
 
-public class MazeNavigatorView extends GLSurfaceView implements
-		GLSurfaceView.Renderer {
+public class MazeNavigatorView extends GLSurfaceView implements GLSurfaceView.Renderer {
 
 	private static Input myInput = new Input( "ONTOUCH" );
 	private static Camera myCamera = new Camera();
@@ -27,8 +25,8 @@ public class MazeNavigatorView extends GLSurfaceView implements
 		super( context );
 	}
 
-	public MazeNavigatorView(Context context, MazeGenerator generator, int sizeX, int sizeY, 
-			Graphic wallstyle, Graphic floorstyle) {
+	public MazeNavigatorView(Context context, MazeGenerator generator, int sizeX, int sizeY, Graphic wallstyle,
+			Graphic floorstyle) {
 		super( context );
 		_context = context;
 		myGrid = generator.generate( sizeX, sizeY, wallstyle, floorstyle );
@@ -65,10 +63,6 @@ public class MazeNavigatorView extends GLSurfaceView implements
 		myCamera.forward();
 	}
 
-	public static float[] getLook() {
-		return myCamera.smoothRotation();
-	}
-
 	public static boolean checkGrid(int x, int y) {
 		return myGrid.isTraversible( x, y );
 	}
@@ -79,10 +73,19 @@ public class MazeNavigatorView extends GLSurfaceView implements
 		GLES20.glClear( GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT );
 
 		// Combine projection and camera rotation for screen display matrix //
-		Matrix.multiplyMM( _mMVPMatrix, 0, _mProjectionMatrix, 0, MazeNavigatorView.getLook(), 0 );
+		float[] CameraMatrix = myCamera.smoothRotation();
+		Matrix.multiplyMM( _mMVPMatrix, 0, _mProjectionMatrix, 0, CameraMatrix, 0 );
 
 		for ( Graphic curr : Graphic.values() )
-			curr.draw( _mMVPMatrix );
+			if ( curr != Graphic.CLOUDS )
+				curr.draw( _mMVPMatrix );
+		//		float[] temp = new float[16];
+		//		Matrix.setIdentityM(temp,0);
+		CameraMatrix[12] = 0;
+		CameraMatrix[13] = 0;
+		CameraMatrix[14] = 0;
+		Matrix.multiplyMM( _mMVPMatrix, 0, _mProjectionMatrix, 0, CameraMatrix, 0 );
+		Graphic.CLOUDS.draw( _mMVPMatrix );
 	}
 
 	@Override
@@ -108,6 +111,6 @@ public class MazeNavigatorView extends GLSurfaceView implements
 		float ratio = (float) width / height;
 
 		// Projection matrix is applied to object coordinates in the onDrawFrame() method //
-		Matrix.perspectiveM( _mProjectionMatrix, 0, 90, ratio, 0.1f, 5f );
+		Matrix.perspectiveM( _mProjectionMatrix, 0, 90, ratio, 0.1f, 5.5f );
 	}
 }

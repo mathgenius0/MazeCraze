@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.cloudmine.api.CMObject;
 
+import cs275.game.mazeCraze.Activity.NavigatorActivity;
 import cs275.game.mazeCraze.Graphics.Graphic;
 
 public class Grid extends CMObject {
@@ -14,7 +15,7 @@ public class Grid extends CMObject {
 	private Graphic _floorstyle;
 	private int _gridSizeX;
 	private int _gridSizeY;
-	private ArrayList<ArrayList<Block> > _blocks;
+	private ArrayList<ArrayList<Block>> _blocks;
 
 	public Grid() {
 	}
@@ -22,7 +23,7 @@ public class Grid extends CMObject {
 	public Grid(int x, int y) {
 		_gridSizeX = x;
 		_gridSizeY = y;
-		_blocks = new ArrayList<ArrayList<Block> >();
+		_blocks = new ArrayList<ArrayList<Block>>();
 		initialize();
 	}
 
@@ -47,10 +48,10 @@ public class Grid extends CMObject {
 
 		initializeTerminals();
 	}
-	
+
 	public void initializeTerminals() {
-		setBlock(0, 0, Block.ENTRANCE);
-		setBlock( (_gridSizeX-1), (_gridSizeY-1), Block.EXIT);
+		setBlock( 0, 0, Block.ENTRANCE );
+		setBlock( ( _gridSizeX - 1 ), ( _gridSizeY - 1 ), Block.EXIT );
 	}
 
 	/**
@@ -64,12 +65,16 @@ public class Grid extends CMObject {
 		if ( x >= _gridSizeX || y >= _gridSizeY )
 			throw exception;
 
-		if ( isTraversible(x, y) )
-			setBlock(x, y, Block.WALL);
-		else
-			setBlock(x, y, Block.FLOOR);
-
-		
+		switch ( getBlock( x, y ) ) {
+		case FLOOR:
+			setBlock( x, y, Block.WALL );
+			break;
+		case WALL:
+			setBlock( x, y, Block.FLOOR );
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -77,42 +82,85 @@ public class Grid extends CMObject {
 	 */
 	public boolean isTraversible(int x, int y) {
 		boolean traversible;
-		
+
 		if ( x < 0 || y < 0 )
 			traversible = false;
 		else if ( x >= _gridSizeX || y >= _gridSizeY )
 			traversible = false;
-		else if ( getBlock(x, y) == Block.WALL )
+		else if ( getBlock( x, y ) == Block.WALL )
 			traversible = false;
-		else
+		else if ( getBlock( x, y ) == Block.EXIT ) {
 			traversible = true;
-		
+			NavigatorActivity.showWin();
+		} else
+			traversible = true;
+
 		return traversible;
 	}
-	
-	public String getName() { return _name; }
-	public void setName(String name) { _name = name; }
-	
-	public String getCreator() { return _creator; }
-	public void setCreator(String creator) { _creator = creator; }
-	
-	public Graphic getWallStyle() { return _wallstyle; }
-	public void setWallStyle(Graphic wallstyle) { _wallstyle = wallstyle; }
-	
-	public Graphic getFloorStyle() { return _floorstyle; }
-	public void setFloorStyle(Graphic floorstyle) { _floorstyle = floorstyle; }
 
-	public int getGridSizeX() { return _gridSizeX; }
-	public void setGridSizeX(int x) { _gridSizeX = x; }
+	public String getName() {
+		return _name;
+	}
 
-	public int getGridSizeY() { return _gridSizeY; }
-	public void setGridSizeY(int y) { _gridSizeY = y; }
+	public void setName(String name) {
+		_name = name;
+	}
 
-	public ArrayList<ArrayList<Block> > getBlocks() { return _blocks; }
-	public void setBlocks(ArrayList<ArrayList<Block> > blocks) { _blocks = blocks; }
-	
-	public Block getBlock(int x, int y) { return _blocks.get(y).get(x); }
-	public void setBlock(int x, int y, Block b) { _blocks.get(y).set(x, b); }
+	public String getCreator() {
+		return _creator;
+	}
+
+	public void setCreator(String creator) {
+		_creator = creator;
+	}
+
+	public Graphic getWallStyle() {
+		return _wallstyle;
+	}
+
+	public void setWallStyle(Graphic wallstyle) {
+		_wallstyle = wallstyle;
+	}
+
+	public Graphic getFloorStyle() {
+		return _floorstyle;
+	}
+
+	public void setFloorStyle(Graphic floorstyle) {
+		_floorstyle = floorstyle;
+	}
+
+	public int getGridSizeX() {
+		return _gridSizeX;
+	}
+
+	public void setGridSizeX(int x) {
+		_gridSizeX = x;
+	}
+
+	public int getGridSizeY() {
+		return _gridSizeY;
+	}
+
+	public void setGridSizeY(int y) {
+		_gridSizeY = y;
+	}
+
+	public ArrayList<ArrayList<Block>> getBlocks() {
+		return _blocks;
+	}
+
+	public void setBlocks(ArrayList<ArrayList<Block>> blocks) {
+		_blocks = blocks;
+	}
+
+	public Block getBlock(int x, int y) {
+		return _blocks.get( y ).get( x );
+	}
+
+	public void setBlock(int x, int y, Block b) {
+		_blocks.get( y ).set( x, b );
+	}
 
 	public String toString() {
 		String str = "";
@@ -129,7 +177,7 @@ public class Grid extends CMObject {
 	public void generateBuffers() {
 		for ( int y = 0; y < _gridSizeY; y++ )
 			for ( int x = 0; x < _gridSizeX; x++ ) {
-				Block current = getBlock(x, y);
+				Block current = getBlock( x, y );
 				switch ( current ) {
 				case WALL:
 					current.generateBuffers( _wallstyle, x, y );
@@ -145,27 +193,40 @@ public class Grid extends CMObject {
 					break;
 				}
 			}
-		
-		Graphic graphic = _wallstyle;
-		graphic.appendArrays( genVertexCoords(), genTextureCoords(), genDrawOrder( graphic.getVertexCount() ) );
-	}
-	
 
-	protected ArrayList<Float> genVertexCoords() {
+		_wallstyle.appendArrays( genWallVertexCoords(), genWallTextureCoords(),
+				genWallDrawOrder( _wallstyle.getVertexCount() ) );
+		Graphic.CLOUDS.appendArrays( genSkyVertexCoords(), genSkyTextureCoords(),
+				genSkyDrawOrder( Graphic.CLOUDS.getVertexCount() ) );
+	}
+
+	protected ArrayList<Float> genWallVertexCoords() {
 		ArrayList<Float> coords = new ArrayList<Float>();
 		// @formatter:off
-		for(float i = 0; i < _gridSizeX; i++) {
-			coords.add(i); coords.add( -0.5f ); coords.add(0.0f);
-			coords.add(i); coords.add( 0.5f ); coords.add(0.0f);
+		for(float i = 0; i <= _gridSizeX; i++) {
+			coords.add(i); coords.add(-0.5f); coords.add(0.0f);
+			coords.add(i); coords.add(0.5f); coords.add(0.0f);
+		}
+		for(float i = 0; i <= _gridSizeY; i++) {
+			coords.add((float) _gridSizeX); coords.add(-0.5f); coords.add(i);
+			coords.add((float) _gridSizeX); coords.add(0.5f); coords.add(i);
+		}
+		for(float i = _gridSizeX; i >= 0; i--) {
+			coords.add(i); coords.add(-0.5f); coords.add((float) _gridSizeY);
+			coords.add(i); coords.add(0.5f); coords.add((float) _gridSizeY);
+		}
+		for(float i = _gridSizeY; i >= 0; i--) {
+			coords.add(0.0f); coords.add(-0.5f); coords.add(i);
+			coords.add(0.0f); coords.add(0.5f); coords.add(i);
 		}
 		// @formatter:on
 		return coords;
 	}
 
-	protected ArrayList<Float> genTextureCoords() {
+	protected ArrayList<Float> genWallTextureCoords() {
 		ArrayList<Float> coords = new ArrayList<Float>();
 		// @formatter:off
-		for(float i = 0; i < _gridSizeX; i++) {
+		for(float i = 0; i < 2*((_gridSizeX+1)+(_gridSizeY+1)); i++) {
 			coords.add(i); coords.add( 1.0f );
 			coords.add(i); coords.add( 0.0f );
 		}
@@ -173,15 +234,45 @@ public class Grid extends CMObject {
 		return coords;
 	}
 
-	protected ArrayList<Integer> genDrawOrder(int i) {
+	protected ArrayList<Integer> genWallDrawOrder(int i) {
 		ArrayList<Integer> order = new ArrayList<Integer>();
-		int upper = 2*_gridSizeX;
-		
-		for (int a = 0; a < upper; a++)
-			order.add(i + a);
-		order.add(i + upper-1);
-		order.add(i + upper);
-		
+		int upper = 4 * ( ( _gridSizeX + 1 ) + ( _gridSizeY + 1 ) );
+		for ( int a = 0; a < upper; a++ )
+			order.add( i + a );
+		order.add( i + upper - 1 );
+		order.add( i + upper );
+
+		return order;
+	}
+
+	protected ArrayList<Float> genSkyVertexCoords() {
+		ArrayList<Float> coords = new ArrayList<Float>();
+		// @formatter:off
+		coords.add( -5.0f ); coords.add( 0.5f ); coords.add( -5.0f );
+		coords.add( -5.0f ); coords.add( 0.5f ); coords.add( 5.0f );
+		coords.add( 5.0f ); coords.add( 0.5f ); coords.add( -5.0f );
+		coords.add( 5.0f ); coords.add( 0.5f ); coords.add( 5.0f );
+		// @formatter:on
+		return coords;
+	}
+
+	protected ArrayList<Float> genSkyTextureCoords() {
+		ArrayList<Float> coords = new ArrayList<Float>();
+		// @formatter:off
+		coords.add( 0.0f ); coords.add( 1.0f );
+		coords.add( 0.0f ); coords.add( 0.0f );
+		coords.add( 1.0f ); coords.add( 1.0f );
+		coords.add( 1.0f ); coords.add( 0.0f );
+		// @formatter:on
+		return coords;
+	}
+
+	protected ArrayList<Integer> genSkyDrawOrder(int i) {
+		ArrayList<Integer> order = new ArrayList<Integer>();
+		for ( int a = 0; a < 4; a++ )
+			order.add( i + a );
+		order.add( i + 3 );
+		order.add( i + 4 );
 		return order;
 	}
 

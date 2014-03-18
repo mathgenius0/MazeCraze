@@ -21,14 +21,6 @@
         android:text="@string/lblinstructions" />
 
     <Button
-        android:id="@+id/btngenerate"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/lblgenerate" />
-
-    <Button
         android:id="@+id/btnreturn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -40,10 +32,10 @@
         android:id="@+id/laycreator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnsave"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/mazeCreationInstructions"
+        android:layout_toLeftOf="@+id/btnsave"
+        android:layout_toRightOf="@+id/btnreturn"
         android:orientation="vertical" >
 
     </LinearLayout>
