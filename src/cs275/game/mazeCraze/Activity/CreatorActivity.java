@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.cloudmine.api.CMApiCredentials;
 
-import cs275.game.mazeCraze.CloudMineClient;
+import cs275.game.mazeCraze.CMClient;
 import cs275.game.mazeCraze.MazeCreatorView;
 import cs275.game.mazeCraze.R;
 import cs275.game.mazeCraze.Graphics.Graphic;
@@ -20,13 +20,13 @@ public class CreatorActivity extends Activity implements OnClickListener {
 	
 	MazeCreatorView creatorView;
 	
-	CloudMineClient cmClient;
+	CMClient cmClient;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate( savedInstanceState );
 		
-		cmClient = new CloudMineClient(CreatorActivity.this, "Grid successfully saved.", "Grid failed to save.");
+		cmClient = new CMClient(CreatorActivity.this, "Grid successfully saved.", "Grid failed to save.");
 		CMApiCredentials.initialize(cmClient.getAppId(), cmClient.getApiKey(), getApplicationContext());
 		
 		// Import the intent, i.e. the input from the previous menu //
@@ -64,7 +64,7 @@ public class CreatorActivity extends Activity implements OnClickListener {
 			break;
 		case R.id.btnsave:
 			creatorView.setCreator("default");
-			creatorView.getGrid().save( cmClient.getResponseCallBack() );
+			creatorView.getGrid().save( cmClient.getModificationResponseCallBack() );
 			break;
 		}
 	}
