@@ -162,7 +162,7 @@ public class Grid extends CMObject {
 		_blocks.get( y ).set( x, b );
 	}
 
-	public String toString() {
+	public String printToConsole() {
 		String str = "";
 		for ( ArrayList<Block> row : _blocks ) {
 			for ( Block b : row ) {
@@ -173,6 +173,8 @@ public class Grid extends CMObject {
 		}
 		return str;
 	}
+	
+	public String toString() { return getName() + " | " + getCreator(); }
 
 	public void generateBuffers() {
 		for ( int y = 0; y < _gridSizeY; y++ )
