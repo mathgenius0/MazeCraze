@@ -47,8 +47,6 @@ public class CreatorActivity extends Activity implements OnClickListener {
 		// Create the buttons //
 		Button returnButton = (Button) findViewById(R.id.btnreturn);
 		returnButton.setOnClickListener(this);
-		Button generatorButton = (Button) findViewById(R.id.btngenerate);
-		generatorButton.setOnClickListener(this);
 		Button saveButton = (Button) findViewById(R.id.btnsave);
 		saveButton.setOnClickListener(this);
 	}
@@ -58,9 +56,6 @@ public class CreatorActivity extends Activity implements OnClickListener {
 		switch ( v.getId() ) {
 		case R.id.btnreturn:
 			NavUtils.navigateUpFromSameTask( this );
-			break;
-		case R.id.btngenerate:
-			//TODO
 			break;
 		case R.id.btnsave:
 			creatorView.setCreator("default");
