@@ -34,7 +34,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class id {
         public static final int RelativeLayout1=0x7f080004;
         public static final int btncreate=0x7f080017;
-        public static final int btngenerate=0x7f08001b;
+        public static final int btngenerate=0x7f08001c;
         public static final int btnload=0x7f080018;
         public static final int btnrandom=0x7f080016;
         public static final int btnreturn=0x7f080002;
@@ -43,8 +43,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int btnstartcreate=0x7f080011;
         public static final int imglogo=0x7f080015;
         public static final int laycreator=0x7f080003;
+        public static final int laynavigator=0x7f080019;
         public static final int laystyle=0x7f080005;
-        public static final int lblalgoritm=0x7f080019;
+        public static final int lblalgoritm=0x7f08001a;
         public static final int lblfloor=0x7f080009;
         public static final int lbloptions=0x7f08000b;
         public static final int lblsize=0x7f08000d;
@@ -53,7 +54,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int lblwalls=0x7f080007;
         public static final int lstResults=0x7f080014;
         public static final int mazeCreationInstructions=0x7f080001;
-        public static final int spinalgorithm=0x7f08001a;
+        public static final int spinalgorithm=0x7f08001b;
         public static final int spinfloor=0x7f08000a;
         public static final int spinwall=0x7f080008;
         public static final int txtMazeCreator=0x7f080013;
@@ -66,7 +67,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int creator_options_menu=0x7f030001;
         public static final int load_menu=0x7f030002;
         public static final int main_menu=0x7f030003;
-        public static final int random_menu=0x7f030004;
+        public static final int navigator_menu=0x7f030004;
+        public static final int random_menu=0x7f030005;
     }
     public static final class raw {
         public static final int fragmentshader=0x7f040000;
