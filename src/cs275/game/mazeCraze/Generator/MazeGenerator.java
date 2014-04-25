@@ -38,7 +38,7 @@ public enum MazeGenerator {
 		}
 	},
 
-	PRIM("Prim's Algorithm") {
+	KRUSKAL("Kruskal's Algorithm") {
 		@Override
 		public Grid generate(int sizeX, int sizeY, Graphic wallstyle, Graphic floorstyle) {
 			ArrayList<Edge> path = new ArrayList<Edge>();
@@ -73,7 +73,7 @@ public enum MazeGenerator {
 		}
 	},
 
-	KRUSKAL("Kruskal's Algorithm") {
+	PRIM("Prim's Algorithm") {
 		@Override
 		public Grid generate(int sizeX, int sizeY, Graphic wallstyle, Graphic floorstyle) {
 			ArrayList<Edge> path = new ArrayList<Edge>();
